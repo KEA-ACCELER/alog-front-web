@@ -7,10 +7,10 @@ import Logo from "../assets/logo/alog-logo.png";
 import { Button } from "react-bootstrap";
 export const TopNavBar = () => {
     return (
-        <div>
-            <Navbar fixed="top" expand="lg" className="bg-body-tertiary">
+        <div className="TopNavBar">
+            <Navbar expand="lg" className="bg-body-tertiary">
                 <Container>
-                    <Navbar.Brand href="">
+                    <Navbar.Brand href="/">
                         <img src={Logo} width="30" height="30" className="d-inline-block align-top" alt="" />
                         A-Log
                     </Navbar.Brand>

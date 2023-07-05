@@ -1,5 +1,5 @@
 import "./App.css";
-import AppRouter from "./AppRouter";
+import AppRouter from "./navigation/AppRouter";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 function App() {
