@@ -8,7 +8,7 @@ import { Button } from "react-bootstrap";
 export const TopNavBar = () => {
     return (
         <div>
-            <Navbar expand="lg" className="bg-body-tertiary">
+            <Navbar fixed="top" expand="lg" className="bg-body-tertiary">
                 <Container>
                     <Navbar.Brand href="">
                         <img src={Logo} width="30" height="30" className="d-inline-block align-top" alt="" />
