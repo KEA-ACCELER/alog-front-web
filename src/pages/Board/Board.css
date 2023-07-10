@@ -1,5 +1,8 @@
 /* ProjectBoard.css */
 
+.ProjectBoard {
+    width: 100%;
+}
 .ProjectBoard .ProjectBoardName {
     justify-content: center;
     align-items: center;
