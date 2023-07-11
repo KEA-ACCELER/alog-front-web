@@ -7,7 +7,7 @@ import { Timeline } from "../pages/Timeline/Timeline";
 import { ReleaseNote } from "../pages/ReleaseNote/ReleaseNote";
 import { CreateReleaseNote } from "../pages/ReleaseNote/CreateReleaseNote";
 
-const AppRouter = () => {
+const AppRouter = (): JSX.Element => {
     return (
         <BrowserRouter>
             <Routes>
