@@ -5,24 +5,44 @@ import { FloatingWrapper } from "../../components/FloatingWrapper";
 
 const Mock = [
     {
-        title: "V1.0.10",
+        version: "V1.0.10",
         date: "2023.06.04",
-        content: "content",
+        content: [
+            { tag: "added", content: ["content1", "content2"] },
+            { tag: "fixed", content: ["content"] },
+            { tag: "deleted", content: ["content"] },
+            { tag: "added", content: ["content"] },
+        ],
     },
     {
-        title: "V1.0.9",
+        version: "V1.0.9",
         date: "2023.06.04",
-        content: "content",
+        content: [
+            { tag: "added", content: ["content"] },
+            { tag: "fixed", content: ["content1", "content2"] },
+            { tag: "deleted", content: ["content"] },
+            { tag: "added", content: ["content"] },
+        ],
     },
     {
-        title: "V1.0.9",
+        version: "V1.0.8",
         date: "2023.06.04",
-        content: "content",
+        content: [
+            { tag: "added", content: ["content"] },
+            { tag: "fixed", content: ["content"] },
+            { tag: "deleted", content: ["content"] },
+            { tag: "added", content: ["content"] },
+        ],
     },
     {
-        title: "V1.0.8",
+        version: "V1.0.7",
         date: "2023.06.04",
-        content: "content",
+        content: [
+            { tag: "added", content: ["content"] },
+            { tag: "fixed", content: ["content"] },
+            { tag: "deleted", content: ["content"] },
+            { tag: "added", content: ["content"] },
+        ],
     },
 ];
 export const ReleaseNote = () => {
@@ -38,14 +58,27 @@ export const ReleaseNote = () => {
                 <div className="releaseNoteList">
                     {Mock.map((it) => (
                         <FloatingWrapper className="releaseNote" width="90%" borderRadius="25px">
-                            <div>{it.title}</div>
-                            <div>{it.content}</div>
+                            <div className="titleWrapper">
+                                <h5>{it.version}</h5>
+                                <div>{it.date}</div>
+                            </div>
+
+                            {it.content.map((it) => (
+                                <div className="releaseNoteContentItem">
+                                    <div>{it.tag}</div>
+                                    <div>
+                                        {it.content.map((it) => (
+                                            <div> . {it}</div>
+                                        ))}
+                                    </div>
+                                </div>
+                            ))}
                         </FloatingWrapper>
                     ))}
                 </div>
                 <FloatingWrapper className="rightNavigation" width="150px" height="fit-content">
                     {Mock.map((it) => (
-                        <a className="navContent">{it.title}</a>
+                        <a className="navContent">{it.version}</a>
                     ))}
                 </FloatingWrapper>
             </div>
