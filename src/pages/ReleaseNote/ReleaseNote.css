@@ -1,8 +1,20 @@
 .ReleaseNote {
     margin-top: 2%;
+    width: 100%;
 }
 .ReleaseNote .topWrapper {
     display: flex;
 }
-.ReleaseNote {
+
+.ReleaseNote .mainWrapper {
+    display: flex;
+    justify-content: space-between;
+    margin-right: 4%;
+}
+
+.ReleaseNote .releaseNoteList {
+    width: 100%;
+}
+.ReleaseNote .releaseNote {
+    margin-top: 40px;
 }

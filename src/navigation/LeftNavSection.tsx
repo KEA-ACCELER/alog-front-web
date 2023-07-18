@@ -8,7 +8,7 @@ export const LeftNavSection = () => {
     const navigate = useNavigate();
     return (
         <div className="LeftNavSection">
-            <FloatingWrapper width={200} height={500} className="container">
+            <FloatingWrapper width={"200px"} height={"500px"} className="container">
                 <div className="head_container">
                     <div className="logo">
                         <img src={logo} alt="logo" />
