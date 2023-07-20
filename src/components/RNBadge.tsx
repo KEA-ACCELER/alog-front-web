@@ -52,7 +52,7 @@ const RNBadgeContainer = Styled.div<IRNBadgeContainer>`
     padding: ${(props) => (props.type === "tag" ? "4px" : "8px")};
     border-radius: 4px;
     width: fit-content;
-    margin-top: 8px;
+    margin-top: 4px;
     margin-bottom: 4px;
     background-color: ${(props) =>
         props.tag === "new"
