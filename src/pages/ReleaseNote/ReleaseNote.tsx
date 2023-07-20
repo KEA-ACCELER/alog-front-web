@@ -67,7 +67,7 @@ export const ReleaseNote = () => {
 
                             {it.content.map((it) => (
                                 <div className="releaseNoteContentItem">
-                                    <RNBadge tag={it.tag} />
+                                    <RNBadge tag={it.tag} type="tag" />
                                     <div>
                                         {it.content.map((it) => (
                                             <div> . {it}</div>
