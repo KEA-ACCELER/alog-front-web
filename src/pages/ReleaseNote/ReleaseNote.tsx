@@ -5,6 +5,7 @@ import { FloatingWrapper } from "../../components/FloatingWrapper";
 import { RNBadge } from "../../components/RNBadge";
 import { ReleaseNoteData } from "../../interfaces/releaseNote.interface";
 import { BsDot } from "react-icons/bs";
+import { useEffect, useState } from "react";
 
 const Mock: ReleaseNoteData[] = [
     {
@@ -61,6 +62,7 @@ export const ReleaseNote = () => {
             <div className="mainWrapper">
                 <div className="topWrapper">
                     <h1>ReleaseNotes</h1>
+
                     <Button className="createNewBtn" variant="outline-primary" onClick={() => navigation("/CreateReleaseNote")}>
                         Create New
                     </Button>

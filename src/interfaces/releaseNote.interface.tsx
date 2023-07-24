@@ -12,9 +12,12 @@ export interface Content {
 export type RNTag = "new" | "featured" | "changed" | "fixed" | "deprecated" | "bug";
 
 export interface ReleaseNoteColumnData {
+    key: number;
     tag: RNTag;
+    show: boolean;
 }
 export interface RNColumnContentData {
     content: string;
     issue?: string;
+    key: number;
 }
