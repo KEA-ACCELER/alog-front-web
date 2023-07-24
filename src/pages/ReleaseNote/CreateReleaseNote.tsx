@@ -3,8 +3,10 @@ import { useNavigate } from "react-router-dom";
 import "./CreateReleaseNote.css";
 import { RNBadge } from "../../components/RNBadge";
 import { FloatingWrapper } from "../../components/FloatingWrapper";
-import { BsDot } from "react-icons/bs";
 import { RNColumn } from "../../components/RNColumn";
+import { ReleaseNoteColumnData } from "../../interfaces/releaseNote.interface";
+
+const mock: ReleaseNoteColumnData[] = [{ tag: "new" }, { tag: "featured" }];
 
 export const CreateReleaseNote = () => {
     const navigation = useNavigate();
@@ -25,17 +27,16 @@ export const CreateReleaseNote = () => {
                 <FloatingWrapper className="newRelaseNote" width="90%" borderRadius="25px">
                     <div className="detailsWrapper">
                         <div className="rnTag">AL-123</div>
-                        <div>
-                            Version : V<input />.<input />.<input />.
-                        </div>
-                        <div>
-                            Update Date : <input />
-                        </div>
+                        <h6>
+                            Version : V<input className="versionInput" />.<input className="versionInput" />.<input className="versionInput" />.
+                        </h6>
+                        <h6>
+                            Update Date : <input className="updateDateInput" />
+                        </h6>
                     </div>
-
-                    <RNColumn tag="new" />
-                    <RNColumn tag="featured" />
-                    <RNColumn tag="changed" />
+                    {mock.map((it) => (
+                        <RNColumn tag={it.tag} />
+                    ))}
                 </FloatingWrapper>
             </div>
             <FloatingWrapper className="rightNavigation" width="220px" height="fit-content">

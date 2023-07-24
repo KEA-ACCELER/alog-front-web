@@ -10,3 +10,11 @@ export interface Content {
 }
 
 export type RNTag = "new" | "featured" | "changed" | "fixed" | "deprecated" | "bug";
+
+export interface ReleaseNoteColumnData {
+    tag: RNTag;
+}
+export interface RNColumnContentData {
+    content: string;
+    issue?: string;
+}

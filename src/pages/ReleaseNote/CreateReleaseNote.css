@@ -18,6 +18,16 @@
     width: 100%;
     justify-content: space-between;
 }
+.CreateReleaseNote .versionInput {
+    border: 0;
+    border-bottom: 2px solid rgba(132, 0, 255, 0.274);
+    width: 30px;
+}
+.CreateReleaseNote .updateDateInput {
+    border: 0;
+    border-bottom: 2px solid rgba(132, 0, 255, 0.274);
+    width: 100px;
+}
 
 .CreateReleaseNote .backBtn {
     margin-left: 20px;
