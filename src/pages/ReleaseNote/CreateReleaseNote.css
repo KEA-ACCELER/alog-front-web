@@ -1,0 +1,59 @@
+.CreateReleaseNote {
+    margin-top: 2%;
+    display: flex;
+    width: 100%;
+    margin-right: 4%;
+}
+.CreateReleaseNote .mainContainer {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    padding-right: 6%;
+}
+
+.CreateReleaseNote .topWrapper {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    justify-content: space-between;
+}
+
+.CreateReleaseNote .backBtn {
+    margin-left: 20px;
+    height: 40px;
+}
+.CreateReleaseNote .saveBtn {
+    margin-left: 20px;
+    height: 40px;
+}
+.CreateReleaseNote .newRelaseNote {
+    margin-top: 4%;
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    width: 100%;
+    margin-right: 4%;
+}
+.CreateReleaseNote .detailsWrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    width: 100%;
+}
+.CreateReleaseNote .rnTag {
+    padding: 8px;
+    width: fit-content;
+    background-color: lightgray;
+}
+.CreateReleaseNote .rightNavigation {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    padding: 3%;
+    margin-top: 2%;
+}
+.CreateReleaseNote .rightNavigation .tagButton {
+    margin-top: 12px;
+    cursor: pointer;
+}

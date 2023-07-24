@@ -1,0 +1,9 @@
+.CreateReleaseNote .rnColumn {
+    display: flex;
+    align-items: start;
+    width: 100%;
+    padding: 2%;
+    margin-top: 4%;
+}
+.CreateReleaseNote .rnBoxContent {
+}

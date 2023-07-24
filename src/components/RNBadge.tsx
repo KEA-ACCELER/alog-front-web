@@ -28,7 +28,7 @@ export const RNBadge = ({ tag, type }: { tag: RNTag; type?: string }) => {
                                 ? ChangedIcon
                                 : null
                         }
-                        width={type === "tag" ? "18px" : "24px"}
+                        width={type === "tag" ? "18px" : "22px"}
                     />
                 }
             </div>
@@ -49,7 +49,7 @@ const RNBadgeContainer = Styled.div<IRNBadgeContainer>`
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: ${(props) => (props.type === "tag" ? "4px" : "8px")};
+    padding: ${(props) => (props.type === "tag" ? "4px" : "6px")};
     border-radius: 4px;
     width: fit-content;
     margin-top: 4px;
