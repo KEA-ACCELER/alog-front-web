@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
 export const TextButton = styled.button`
-    background-color: white;
+    background-color: transparent;
     border: 0;
 `;

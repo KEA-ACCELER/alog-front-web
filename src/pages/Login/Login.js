@@ -3,13 +3,14 @@ import Button from "react-bootstrap/Button";
 import "./Login.css";
 import logo from "../../assets/logo/alog-logo.png";
 import { LoginRequestHandler } from "../../authentication/authentication.service";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { FloatingWrapper } from "../../components/FloatingWrapper";
 import FadeIn from "../../animation/FadeIn";
 import { TextButton } from "../../components/Buttons";
 
 const Login = () => {
     const location = useLocation();
+    const navigate = useNavigate();
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
@@ -73,7 +74,15 @@ const Login = () => {
                 </FadeIn>
             </FloatingWrapper>
             <div className="joinNowSection">
-                New to A-Log? <TextButton className="joinNowBtn">Join Now</TextButton>
+                New to A-Log?{" "}
+                <TextButton
+                    className="joinNowBtn"
+                    onClick={() => {
+                        navigate("/registerform");
+                    }}
+                >
+                    Join Now
+                </TextButton>
             </div>
         </FadeIn>
     );
