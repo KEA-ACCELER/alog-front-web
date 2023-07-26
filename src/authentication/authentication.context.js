@@ -16,10 +16,10 @@ export const AuthenticationContextProvider = ({ children }) => {
 
     const OnLogout = () => {
         setUserToken("");
+        window.location.reload();
         setIsLogin(false);
         sessionStorage.removeItem("isLogin");
         alert("로그아웃 되었습니다!");
-        window.location.reload();
     };
 
     const OnRegister = async (registerData) => {};

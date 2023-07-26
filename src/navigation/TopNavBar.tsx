@@ -95,7 +95,7 @@ export const TopNavBar = () => {
                         A-Log
                     </Navbar.Brand>
                     <Navbar.Toggle aria-controls="basic-navbar-nav" />
-                    {JSON.parse(isLogin) === true ? <LoggedInNav /> : <LoggedOutNav />}
+                    {isLogin === true ? <LoggedInNav /> : <LoggedOutNav />}
                 </Container>
             </Navbar>
             <Outlet />
