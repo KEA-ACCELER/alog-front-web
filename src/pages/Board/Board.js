@@ -5,6 +5,7 @@ import IssueModal from "../../components/Modal/IssueModal";
 import { LeftNavSection } from "../../navigation/LeftNavSection";
 import { FloatingWrapper } from "../../components/FloatingWrapper";
 import { Button } from "react-bootstrap";
+import FadeIn from "../../animation/FadeIn";
 
 const BoardColumn = ({ column, issues, handleAddIssue }) => {
     const [showModal, setShowModal] = useState(false);
@@ -88,7 +89,7 @@ const Board = () => {
 
     return (
         <DragDropContext onDragEnd={handleDragEnd}>
-            <div className="ProjectBoard">
+            <FadeIn className="ProjectBoard" childClassName="childClassName">
                 <h1 className="ProjectBoardName">Project Board</h1>
                 <div className="project-board">
                     {columns.map((column) => (
@@ -98,7 +99,7 @@ const Board = () => {
                         </div>
                     ))}
                 </div>
-            </div>
+            </FadeIn>
         </DragDropContext>
     );
 };

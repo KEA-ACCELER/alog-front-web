@@ -5,6 +5,7 @@ import Button from "react-bootstrap/Button";
 import CalendarTimeline from "react-calendar-timeline";
 import moment from "moment";
 import "react-calendar-timeline/lib/Timeline.css";
+import FadeIn from "../../animation/FadeIn";
 
 export const Timeline = () => {
     const [topics, setTopics] = useState([]);
@@ -53,7 +54,7 @@ export const Timeline = () => {
     const oneYearFromNow = moment().add(1, "year");
 
     return (
-        <div className="Timeline">
+        <FadeIn className="Timeline">
             <h1 className="ProjectTimelineName">Project Timeline</h1>
             <CalendarTimeline
                 key={topics.length} //추가될때마다 렌더링되게 함
@@ -70,6 +71,6 @@ export const Timeline = () => {
                 Create Topic
             </Button>
             <TopicModal show={showModal} handleClose={handleCloseModal} handleAddTopic={handleAddTopic} />
-        </div>
+        </FadeIn>
     );
 };
