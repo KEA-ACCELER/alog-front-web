@@ -37,7 +37,7 @@ const LoggedInNav = () => {
                         <NavDropdown.Divider />
                         <NavDropdown.Item href="#action/3.4">Separated link</NavDropdown.Item>
                     </NavDropdown>
-                    <Button>만들기</Button>
+                    <Button variant="outline-primary">만들기</Button>
                 </Nav>
             </Navbar.Collapse>
             <Navbar.Collapse className="justify-content-end">
