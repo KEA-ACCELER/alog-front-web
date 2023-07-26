@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Button from "react-bootstrap/Button";
 import "./Login.css";
 import logo from "../../assets/logo/alog-logo.png";
@@ -7,15 +7,33 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { FloatingWrapper } from "../../components/FloatingWrapper";
 import FadeIn from "../../animation/FadeIn";
 import { TextButton } from "../../components/Buttons";
+import { AuthenticationContext } from "../../authentication/authentication.context";
 
 const Login = () => {
     const location = useLocation();
     const navigate = useNavigate();
+
+    const { isLogin, OnLogin } = useContext(AuthenticationContext);
+
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
+    const LoginHandler = (email, password) => {
+        OnLogin(email, password);
+    };
+
     useEffect(() => {
-        // 깃허브로 로그인후 동작하는 코드.
+        if (isLogin === true) {
+            navigate("/");
+        }
+    }, [isLogin]);
+    useEffect(() => {
+        if (isLogin === true) {
+            navigate("/");
+        }
+    }, []);
+    // 깃허브로 로그인후 동작하는 코드.
+    useEffect(() => {
         if (location.search) {
             function urlArgs() {
                 var args = {};
@@ -43,6 +61,7 @@ const Login = () => {
             // navigate(`/post/${props.id}`, { state: { id: props.id } });
         }
     }, []);
+
     return (
         <FadeIn className="Login" childClassName="childClassName">
             <FloatingWrapper>
@@ -58,7 +77,7 @@ const Login = () => {
                     </div>
 
                     <div className="button-container">
-                        <Button variant="dark" className="login-button">
+                        <Button variant="dark" className="login-button" onClick={() => LoginHandler()}>
                             Login
                         </Button>
                         <hr />
