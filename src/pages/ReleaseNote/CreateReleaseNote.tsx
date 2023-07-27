@@ -20,10 +20,87 @@ const mockRNData: ReleaseNoteData = {
         { key: 5, content: [{ key: 0, content: "" }], tag: "bug", show: false },
     ],
 };
+const Mock: ReleaseNoteData[] = [
+    {
+        version: "V1.0.10",
+        date: "2023.06.04",
+        content: [
+            {
+                key: 0,
+                tag: "new",
+                content: [
+                    { key: 0, content: "Added homepage to allow user to show they are logged in" },
+                    { key: 1, content: "Added a sort button allowing the user to filter the value array according to their needs." },
+                ],
+                show: true,
+            },
+            { key: 1, tag: "featured", show: true, content: [{ key: 0, content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. In maecenas nec aenean a placerat vitae commodo." }] },
+            { key: 2, tag: "changed", show: true, content: [{ key: 0, content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. In maecenas nec aenean a placerat vitae commodo." }] },
+            { key: 3, tag: "fixed", show: true, content: [{ key: 0, content: "Adaptation of the languages ​​and texts of the commentary part to better reflect reality" }] },
+        ],
+    },
+    {
+        version: "V1.0.9",
+        date: "2023.06.04",
+        content: [
+            { key: 0, show: true, tag: "new", content: [{ key: 0, content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. In maecenas nec aenean a placerat vitae commodo." }] },
+            {
+                key: 1,
+                show: true,
+                tag: "featured",
+                content: [
+                    { key: 0, content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. In maecenas nec aenean a placerat vitae commodo." },
+                    { key: 1, content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. In maecenas nec aenean a placerat vitae commodo." },
+                ],
+            },
+            { key: 2, show: true, tag: "changed", content: [{ key: 0, content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. In maecenas nec aenean a placerat vitae commodo." }] },
+            { key: 3, show: true, tag: "fixed", content: [{ key: 0, content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. In maecenas nec aenean a placerat vitae commodo." }] },
+        ],
+    },
+    {
+        version: "V1.0.8",
+        date: "2023.06.04",
+        content: [
+            { key: 0, show: true, tag: "new", content: [{ key: 0, content: "content" }] },
+            {
+                key: 1,
+                show: true,
+                tag: "featured",
+                content: [
+                    { key: 0, content: "content1" },
+                    { key: 0, content: "content2" },
+                ],
+            },
+            { key: 2, show: true, tag: "changed", content: [{ key: 0, content: "content" }] },
+            { key: 3, show: true, tag: "fixed", content: [{ key: 0, content: "content" }] },
+        ],
+    },
+    {
+        version: "V1.0.7",
+        date: "2023.06.04",
+        content: [
+            { key: 0, show: true, tag: "new", content: [{ key: 0, content: "content" }] },
+            {
+                key: 1,
+                show: true,
+                tag: "featured",
+                content: [
+                    { key: 0, content: "content1" },
+                    { key: 0, content: "content2" },
+                ],
+            },
+            { key: 2, show: true, tag: "changed", content: [{ key: 0, content: "content" }] },
+            { key: 3, show: true, tag: "fixed", content: [{ key: 0, content: "content" }] },
+        ],
+    },
+];
 
 export const CreateReleaseNote = () => {
-    const navigation = useNavigate();
+    const navigate = useNavigate();
     const [data, setData] = useState(mockRNData);
+    const [version, setVersion] = useState("");
+    const [updateDate, setUpdateDate] = useState("");
+
     const [categoryData, setCategoryData] = useState(mockRNData.content);
 
     const toggleTag = (tag: RNTag) => {
@@ -34,6 +111,17 @@ export const CreateReleaseNote = () => {
         filteredData.content = filteredContentData;
         setData(filteredData);
     };
+
+    const onSaveRelaseNote = () => {
+        const newRNData = data;
+        data.version = version;
+        data.date = updateDate;
+        const RNData = [...Mock];
+        RNData.unshift(newRNData);
+        sessionStorage.setItem("RNData", JSON.stringify(RNData));
+        console.log(RNData);
+        navigate("/releasenote");
+    };
     return (
         <div className="CreateReleaseNote">
             <FadeIn width={"100%"}>
@@ -41,10 +129,10 @@ export const CreateReleaseNote = () => {
                     <div className="topWrapper">
                         <h1>Create New Release Note</h1>
                         <div className="btnWrapper">
-                            <Button className="backBtn" variant="outline-primary" onClick={() => navigation(-1)}>
+                            <Button className="backBtn" variant="outline-primary" onClick={() => navigate(-1)}>
                                 Back
                             </Button>
-                            <Button className="saveBtn" variant="outline-primary" onClick={() => navigation("")}>
+                            <Button className="saveBtn" variant="outline-primary" onClick={() => onSaveRelaseNote()}>
                                 Save
                             </Button>
                         </div>
@@ -53,10 +141,18 @@ export const CreateReleaseNote = () => {
                         <div className="detailsWrapper">
                             <div className="rnTag">AL-123</div>
                             <h6>
-                                Version : V<input className="versionInput" placeholder={data.version} />
+                                Version : V<input className="versionInput" value={version} onChange={(e) => setVersion(e.target.value)} placeholder={data.version} />
                             </h6>
                             <h6>
-                                Update Date : <input className="updateDateInput" placeholder={data.date} />
+                                Update Date :{" "}
+                                <input
+                                    className="updateDateInput"
+                                    value={updateDate}
+                                    onChange={(e) => {
+                                        setUpdateDate(e.target.value);
+                                    }}
+                                    placeholder={data.date}
+                                />
                             </h6>
                         </div>
                         {categoryData.map((it) => (it.show ? <RNColumn columnId={it.key} tag={it.tag} key={it.key} content={it.content} data={data} setData={setData} /> : null))}

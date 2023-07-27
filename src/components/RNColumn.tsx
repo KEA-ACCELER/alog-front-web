@@ -56,6 +56,25 @@ export const RNColumn = ({
             return newData;
         });
     };
+
+    const handleInputChange = (itemId: number, inputValue: string) => {
+        setData((prevData) => {
+            const newContentData = prevData.content.map((column) => {
+                if (column.key === columnId) {
+                    const newColumnContentData = column.content.map((item) => {
+                        if (item.key === itemId) {
+                            return { ...item, content: inputValue };
+                        }
+                        return item;
+                    });
+                    return { ...column, content: newColumnContentData };
+                }
+                return column;
+            });
+
+            return { ...prevData, content: newContentData };
+        });
+    };
     return (
         <FloatingWrapper className="RNColumn" borderRadius="20px">
             <FadeIn childClassName="childClassName" width="100%">
@@ -68,7 +87,7 @@ export const RNColumn = ({
                             X
                         </TextButton>
                         <BsDot />
-                        <input className="rnBoxItemContent" />
+                        <input className="rnBoxItemContent" value={it.content} onChange={(e) => handleInputChange(it.key, e.target.value)} />
                         <div>
                             <TextButton className="connectIssueBtn">Connect Issue</TextButton>
                         </div>
