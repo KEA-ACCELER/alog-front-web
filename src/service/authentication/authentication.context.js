@@ -33,9 +33,13 @@ export const AuthenticationContextProvider = ({ children }) => {
 
     const OnDupNNCheck = async (userNN) => {
         const res = await UsersCheckDuplicate(userNN)
-            .then(alert(`${userNN}은 사용가능한 닉네임 입니다!`))
+            .then((res) => {
+                console.log(res.data);
+                return res.data;
+            })
             .catch((e) => alert(e));
-        console.log(res);
+
+        return res;
     };
 
     return (

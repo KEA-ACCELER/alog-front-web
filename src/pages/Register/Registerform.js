@@ -13,7 +13,7 @@ const RegisterForm = () => {
     const navigate = useNavigate();
     const location = useLocation();
 
-    const { OnDupNNCheck } = useContext(AuthenticationContext);
+    const { OnDupNNCheck, OnRegister } = useContext(AuthenticationContext);
 
     const [email, setEmail] = useState();
     const [emailMessage, setEmailMessage] = useState("");
@@ -23,6 +23,7 @@ const RegisterForm = () => {
     const [nickName, setNickName] = useState("");
     const [isEmailValid, setIsEmailValid] = useState(false);
     const [isPasswordValid, setIsPasswordValid] = useState(false);
+    const [isNNValid, setIsNNValid] = useState(false);
 
     const emailRef = useRef();
     const [showEmailTip, setShowEmailTip] = useState(false);
@@ -79,18 +80,26 @@ const RegisterForm = () => {
     }, [password]);
 
     const handleRegister = () => {
-        if (isEmailValid && isPasswordValid) {
-            alert("회원가입에 성공하였습니다");
+        if (isEmailValid && isPasswordValid && isNNValid) {
+            OnRegister(email, password, nickName);
             navigate("/");
         } else if (!isEmailValid) {
             alert("이메일 형식을 확인하세요");
+        } else if (!isNNValid) {
+            alert("닉네임 중복체크를 해주세요");
         } else if (!isPasswordValid) {
             alert("비밀번호 형식을 확인하세요");
         }
     };
 
-    const CheckNNHandler = () => {
-        OnDupNNCheck(nickName);
+    const CheckNNHandler = async () => {
+        if ((await OnDupNNCheck(nickName)) == true) {
+            alert("이미 사용중인 닉네임 입니다.");
+            setIsNNValid(false);
+        } else {
+            alert("사용 가능한 닉네임 입니다");
+            window.confirm("이 닉네임을 사용하시겠습니까?") && setIsNNValid(true);
+        }
     };
 
     return (
@@ -167,8 +176,9 @@ const RegisterForm = () => {
                         <div className="subform-container">
                             <div>Nickname</div>
                             <div className="nickname-container">
-                                <input type="text" placeholder="Enter your nickname..." value={nickName} onChange={(e) => setNickName(e.target.value)} />
+                                <input disabled={isNNValid} type="text" placeholder="Enter your nickname..." value={nickName} onChange={(e) => setNickName(e.target.value)} />
                                 <Button
+                                    disabled={isNNValid}
                                     variant="dark"
                                     className="check-button"
                                     onClick={() => {
