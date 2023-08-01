@@ -4,7 +4,11 @@ import { useNavigate } from "react-router-dom";
 import "./Home.css";
 import FadeIn from "../../animation/FadeIn";
 import StartImg from "../../assets/images/start.png";
+<<<<<<< HEAD
 import { AuthenticationContext } from "../../service/authentication/authentication.context";
+=======
+import { AuthenticationContext } from "../../authentication/authentication.context";
+>>>>>>> 0212d4a9fcd4796d17d80e5234692b7c41a6eaf9
 
 export default function Home() {
     const navigation = useNavigate();
