@@ -16,6 +16,8 @@ const RegisterForm = () => {
     const { OnDupNNCheck, OnRegister } = useContext(AuthenticationContext);
 
     const [email, setEmail] = useState();
+    const [emailNumberChecked, setEmailNumberChecked] = useState(false);
+    const [emailNumberSent, setEmailNumberSent] = useState(false);
     const [emailMessage, setEmailMessage] = useState("");
     const [checkNumber, setCheckNumber] = useState("");
     const [password, setPassword] = useState("");
@@ -80,11 +82,11 @@ const RegisterForm = () => {
     }, [password]);
 
     const handleRegister = () => {
-        if (isEmailValid && isPasswordValid && isNNValid) {
+        if (setEmailNumberChecked && isPasswordValid && isNNValid) {
             OnRegister(email, password, nickName);
             navigate("/");
-        } else if (!isEmailValid) {
-            alert("이메일 형식을 확인하세요");
+        } else if (!setEmailNumberChecked) {
+            alert("이메일 인증을 해주세요.");
         } else if (!isNNValid) {
             alert("닉네임 중복체크를 해주세요");
         } else if (!isPasswordValid) {
@@ -92,6 +94,14 @@ const RegisterForm = () => {
         }
     };
 
+    const CheckEmailHandler = async () => {
+        alert("이메일로 인증번호를 전송했습니다.");
+        setEmailNumberSent(true);
+    };
+    const CheckEmailMessageHandler = async () => {
+        alert("이메일 인증번호를 확인했습니다.");
+        setEmailNumberChecked(true);
+    };
     const CheckNNHandler = async () => {
         if ((await OnDupNNCheck(nickName)) == true) {
             alert("이미 사용중인 닉네임 입니다.");
@@ -115,15 +125,22 @@ const RegisterForm = () => {
                             <div>Email</div>
                             <div className="email-container">
                                 <input
-                                    className={isGitHubReg ? "isGitHubReg" : null}
-                                    disabled={isGitHubReg}
+                                    className={isGitHubReg || emailNumberChecked ? "isGitHubReg" : null}
+                                    disabled={isGitHubReg || emailNumberChecked}
                                     ref={emailRef}
                                     type="text"
                                     placeholder="Enter your email address..."
                                     value={email}
                                     onChange={(e) => setEmail(e.target.value)}
                                 />
-                                <Button variant="dark" className="check-button" disabled={!isEmailValid}>
+                                <Button
+                                    variant="dark"
+                                    className="check-button"
+                                    disabled={!isEmailValid && !emailNumberChecked}
+                                    onClick={() => {
+                                        CheckEmailHandler();
+                                    }}
+                                >
                                     Check
                                 </Button>
                             </div>
@@ -140,14 +157,21 @@ const RegisterForm = () => {
                             <div>Check Number</div>
                             <div className="checknum-container">
                                 <input
-                                    className={isGitHubReg ? "isGitHubReg" : null}
-                                    disabled={isGitHubReg}
+                                    className={isGitHubReg || !emailNumberSent ? "isGitHubReg" : null}
+                                    disabled={isGitHubReg || !emailNumberSent}
                                     type="text"
                                     placeholder="Enter your check number..."
                                     value={checkNumber}
                                     onChange={(e) => setCheckNumber(e.target.value)}
                                 />
-                                <Button variant="dark" className="check-button">
+                                <Button
+                                    disabled={!emailNumberSent}
+                                    variant="dark"
+                                    className="check-button"
+                                    onClick={() => {
+                                        CheckEmailMessageHandler();
+                                    }}
+                                >
                                     Check
                                 </Button>
                             </div>
@@ -176,7 +200,14 @@ const RegisterForm = () => {
                         <div className="subform-container">
                             <div>Nickname</div>
                             <div className="nickname-container">
-                                <input disabled={isNNValid} type="text" placeholder="Enter your nickname..." value={nickName} onChange={(e) => setNickName(e.target.value)} />
+                                <input
+                                    className={isNNValid ? "isGitHubReg" : null}
+                                    disabled={isNNValid}
+                                    type="text"
+                                    placeholder="Enter your nickname..."
+                                    value={nickName}
+                                    onChange={(e) => setNickName(e.target.value)}
+                                />
                                 <Button
                                     disabled={isNNValid}
                                     variant="dark"
