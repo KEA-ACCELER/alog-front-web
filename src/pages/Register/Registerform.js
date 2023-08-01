@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useContext } from "react";
 import Button from "react-bootstrap/Button";
 import "./Registerform.css";
 import logo from "../../assets/logo/alog-logo.png";
@@ -7,10 +7,13 @@ import { FloatingWrapper } from "../../components/FloatingWrapper";
 import FadeIn from "../../animation/FadeIn";
 import Overlay from "react-bootstrap/Overlay";
 import Tooltip from "react-bootstrap/Tooltip";
+import { AuthenticationContext } from "../../service/authentication/authentication.context";
 
 const RegisterForm = () => {
     const navigate = useNavigate();
     const location = useLocation();
+
+    const { OnDupNNCheck } = useContext(AuthenticationContext);
 
     const [email, setEmail] = useState();
     const [emailMessage, setEmailMessage] = useState("");
@@ -84,6 +87,10 @@ const RegisterForm = () => {
         } else if (!isPasswordValid) {
             alert("비밀번호 형식을 확인하세요");
         }
+    };
+
+    const CheckNNHandler = () => {
+        OnDupNNCheck(nickName);
     };
 
     return (
@@ -165,7 +172,7 @@ const RegisterForm = () => {
                                     variant="dark"
                                     className="check-button"
                                     onClick={() => {
-                                        alert("사용 가능한 닉네임입니다.");
+                                        CheckNNHandler();
                                     }}
                                 >
                                     Check
