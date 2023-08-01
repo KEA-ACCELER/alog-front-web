@@ -1,5 +1,5 @@
 import React, { useState, createContext, useEffect } from "react";
-import { loginHandler } from "./authentication.service";
+import { UsersLogin, loginHandler } from "./authentication.service";
 
 export const AuthenticationContext = createContext();
 
@@ -8,7 +8,9 @@ export const AuthenticationContextProvider = ({ children }) => {
     const [isLogin, setIsLogin] = useState(JSON.parse(sessionStorage.getItem("isLogin")));
     const [userData, setUserData] = useState(null);
 
-    const OnLogin = async (userId, userPassword) => {
+    const OnLogin = async (userEmail, userPw) => {
+        const res = await UsersLogin(userEmail, userPw);
+        console.log(res);
         sessionStorage.setItem("isLogin", true);
         setIsLogin(true);
         alert("로그인 되었습니다!");
