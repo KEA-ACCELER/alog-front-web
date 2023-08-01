@@ -1,8 +1,11 @@
 import React, { useState, createContext, useEffect } from "react";
-import {} from "./teams.service";
+import { PostCreateTeams } from "./teams.service";
 
 export const TeamsContext = createContext();
 
 export const TeamsContextProvider = ({ children }) => {
-    return <TeamsContext.Provider value={{}}>{children}</TeamsContext.Provider>;
+    const OnCreateTeam = async () => {
+        const res = await PostCreateTeams(teamName, userNNList, userPk);
+    };
+    return <TeamsContext.Provider value={{ OnCreateTeam }}>{children}</TeamsContext.Provider>;
 };

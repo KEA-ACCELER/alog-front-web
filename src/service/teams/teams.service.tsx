@@ -1,22 +1,48 @@
 import axios, { AxiosError, AxiosResponse } from "axios";
 
-const CLIENT_ID = process.env.REACT_APP_CLIENT_ID;
 const USER_API_URL = process.env.REACT_APP_USER_API_URL;
 
-export const UsersLogin = (userEmail: string, userPassword: string): Promise<AxiosResponse> => {
+export const PostCreateTeams = (teamName: string, userNNList: string[], userPk: number): Promise<AxiosResponse> => {
     const loginData = {
-        userEmail: userEmail,
-        userPw: userPassword,
+        teamName: teamName,
+        userNNList: userNNList,
     };
 
-    const loginResult: Promise<AxiosResponse> = axios
-        .post(`${USER_API_URL}/api/users/login`, loginData)
+    const createTeamRes: Promise<AxiosResponse> = axios
+        .post(`${USER_API_URL}/api/teams?userPk=${userPk}`, loginData)
         .then((res: AxiosResponse) => {
             return res;
         })
         .catch((err: AxiosError) => {
             alert(err);
-            throw err; // Re-throw the error to the caller if needed
+            throw err;
         });
-    return loginResult;
+
+    return createTeamRes;
+};
+export const DeleteTeams = (teamName: string, userPk: number): Promise<AxiosResponse> => {
+    const deleteTeamRes: Promise<AxiosResponse> = axios
+        .delete(`${USER_API_URL}/api/teams?teamName=${teamName}&userPk=${userPk}`)
+        .then((res: AxiosResponse) => {
+            return res;
+        })
+        .catch((err: AxiosError) => {
+            alert(err);
+            throw err;
+        });
+
+    return deleteTeamRes;
+};
+export const GetInfoTeams = (teamName: string, userPk: number): Promise<AxiosResponse> => {
+    const getTeamInfoRes: Promise<AxiosResponse> = axios
+        .get(`${USER_API_URL}/api/teams?teamName=${teamName}&userPk=${userPk}`)
+        .then((res: AxiosResponse) => {
+            return res;
+        })
+        .catch((err: AxiosError) => {
+            alert(err);
+            throw err;
+        });
+
+    return getTeamInfoRes;
 };
