@@ -90,6 +90,7 @@ export const TopNavBar = () => {
                         onClick={() => {
                             navigate("/");
                         }}
+                        style={{ cursor: "pointer" }}
                     >
                         <img src={Logo} width="30" height="30" className="d-inline-block align-top" alt="" />
                         A-Log
