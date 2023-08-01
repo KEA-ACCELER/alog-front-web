@@ -1,16 +1,20 @@
 export interface ReleaseNoteData {
     version: string;
     date: string;
-    content: ReleaseNoteColumnData[];
+    content: Content[];
+}
+
+export interface Content {
+    tag: RNTag;
+    content: string[];
 }
 
 export type RNTag = "new" | "featured" | "changed" | "fixed" | "deprecated" | "bug";
 
 export interface ReleaseNoteColumnData {
-    tag: RNTag;
-    content: RNColumnContentData[];
     key: number;
-    show?: boolean;
+    tag: RNTag;
+    show: boolean;
 }
 export interface RNColumnContentData {
     content: string;

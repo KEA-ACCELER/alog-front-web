@@ -34,9 +34,6 @@
     background-color: #f0f0f0;
     border: none;
 }
-.RegisterForm .isGitHubReg {
-    background-color: #d6d6d6;
-}
 
 .RegisterForm .subform-container {
     position: relative;
