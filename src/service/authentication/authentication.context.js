@@ -5,7 +5,7 @@ export const AuthenticationContext = createContext();
 
 export const AuthenticationContextProvider = ({ children }) => {
     const [userToken, setUserToken] = useState(JSON.parse(sessionStorage.getItem("userToken")));
-    const [isLogin, setIsLogin] = useState(JSON.parse(sessionStorage.getItem("isLogin")));
+    const [isLogin, setIsLogin] = useState(true);
     const [userData, setUserData] = useState(null);
 
     const OnLogin = async (userEmail, userPw) => {
