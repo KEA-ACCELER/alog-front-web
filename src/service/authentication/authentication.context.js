@@ -42,21 +42,27 @@ export const AuthenticationContextProvider = ({ children }) => {
         return res;
     };
 
-    const OnEmailVerifySend = async (email, code) => {
-        const res = await PostSendVerifyEmail(email, code)
+    const OnEmailVerifySend = async (email) => {
+        const res = await PostSendVerifyEmail(email)
             .then((res) => {
                 console.log(res.data);
-                return res.data;
+                alert(res.data);
+                return res;
             })
             .catch((e) => alert(e));
+        return res;
     };
-    const OnEmailVerify = async (email) => {
-        const res = await PostVerifyEmail(email)
+    const OnEmailVerify = async (email, code) => {
+        const res = await PostVerifyEmail(email, code)
             .then((res) => {
-                console.log(res.data);
-                return res.data;
+                console.log(res);
+                alert(res.data);
+                if (res.data == "Email is Verified Successfully") {
+                    return true;
+                } else return false;
             })
             .catch((e) => alert(e));
+        return res;
     };
     return (
         <AuthenticationContext.Provider

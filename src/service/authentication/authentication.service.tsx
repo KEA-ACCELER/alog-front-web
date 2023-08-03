@@ -14,11 +14,11 @@ export const GitHubLoginRequestHandler = () => {
 // EMAIL
 
 export const PostVerifyEmail = (email: string, code: string) => {
-    const emailString = email.replace("@", "%40");
     const verifyData = {
-        email: emailString,
+        email: email,
         code: code,
     };
+    console.log(verifyData);
     const signUpResult: Promise<AxiosResponse> = axios
         .post(`${USER_API_URL}/api/users/emails/verify`, verifyData)
         .then((res: AxiosResponse) => {
@@ -47,9 +47,9 @@ export const PostSendVerifyEmail = (email: string) => {
 
 export const UsersSignup = (email: string, userPw: string, userNN: string) => {
     const SignUpData = {
-        userPw: "string",
-        userNN: "string",
-        email: "string",
+        userPw: userPw,
+        userNN: userNN,
+        email: email,
     };
     const signUpResult: Promise<AxiosResponse> = axios
         .post(`${USER_API_URL}/api/users/signup`, SignUpData)
