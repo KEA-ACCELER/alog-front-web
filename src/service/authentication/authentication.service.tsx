@@ -11,6 +11,40 @@ export const GitHubLoginRequestHandler = () => {
     //로그인 요청을 보내면 github auth server에서 redirect 로 callback, 그리고 auth code를 전달
 };
 
+// EMAIL
+
+export const PostVerifyEmail = (email: string, code: string) => {
+    const emailString = email.replace("@", "%40");
+    const verifyData = {
+        email: emailString,
+        code: code,
+    };
+    const signUpResult: Promise<AxiosResponse> = axios
+        .post(`${USER_API_URL}/api/users/emails/verify`, verifyData)
+        .then((res: AxiosResponse) => {
+            return res;
+        })
+        .catch((err: AxiosError) => {
+            throw err;
+        });
+    return signUpResult;
+};
+
+export const PostSendVerifyEmail = (email: string) => {
+    const emailString = email.replace("@", "%40");
+    const sendResult: Promise<AxiosResponse> = axios
+        .post(`${USER_API_URL}/api/users/emails/send?EmailTo=${emailString}`)
+        .then((res: AxiosResponse) => {
+            return res;
+        })
+        .catch((err: AxiosError) => {
+            throw err;
+        });
+    return sendResult;
+};
+
+// USER AUTH
+
 export const UsersSignup = (email: string, userPw: string, userNN: string) => {
     const SignUpData = {
         userPw: "string",

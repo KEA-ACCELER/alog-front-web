@@ -1,5 +1,5 @@
 import React, { useState, createContext, useEffect } from "react";
-import { UsersCheckDuplicate, UsersLogin, UsersSignup, loginHandler } from "./authentication.service";
+import { PostSendVerifyEmail, PostVerifyEmail, UsersCheckDuplicate, UsersLogin, UsersSignup, loginHandler } from "./authentication.service";
 
 export const AuthenticationContext = createContext();
 
@@ -42,6 +42,22 @@ export const AuthenticationContextProvider = ({ children }) => {
         return res;
     };
 
+    const OnEmailVerifySend = async (email, code) => {
+        const res = await PostSendVerifyEmail(email, code)
+            .then((res) => {
+                console.log(res.data);
+                return res.data;
+            })
+            .catch((e) => alert(e));
+    };
+    const OnEmailVerify = async (email) => {
+        const res = await PostVerifyEmail(email)
+            .then((res) => {
+                console.log(res.data);
+                return res.data;
+            })
+            .catch((e) => alert(e));
+    };
     return (
         <AuthenticationContext.Provider
             value={{
@@ -50,6 +66,8 @@ export const AuthenticationContextProvider = ({ children }) => {
                 OnLogout, // 로그아웃 처리를 담당하는 함수
                 OnRegister, // 회원가입을 담당하는 함수
                 OnDupNNCheck, // 회원가입시 닉네임 중복체크 담당 함수
+                OnEmailVerifySend, // 이메일 인증 번호를 보내는 함수
+                OnEmailVerify, // 이메일 인증 결과 요청 함수
             }}
         >
             {children}
