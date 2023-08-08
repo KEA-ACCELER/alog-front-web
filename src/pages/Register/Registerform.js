@@ -9,6 +9,7 @@ import Overlay from "react-bootstrap/Overlay";
 import Tooltip from "react-bootstrap/Tooltip";
 import { AuthenticationContext } from "../../service/authentication/authentication.context";
 import Spinner from "react-bootstrap/Spinner";
+import { EmailVerifyModal } from "../../components/Modal/EmailVerifyModal";
 
 const RegisterForm = () => {
     const navigate = useNavigate();
@@ -16,7 +17,9 @@ const RegisterForm = () => {
 
     const { OnDupNNCheck, OnRegister, OnEmailVerifySend, OnEmailVerify } = useContext(AuthenticationContext);
 
-    const [email, setEmail] = useState();
+    const [checkCodeModalShow, setCheckCodeModalShow] = useState(false);
+
+    const [email, setEmail] = useState("");
     const [emailNumberChecked, setEmailNumberChecked] = useState(false);
     const [emailNumberSent, setEmailNumberSent] = useState(false);
     const [emailNumberSending, setEmailNumberSending] = useState(false);
@@ -98,13 +101,17 @@ const RegisterForm = () => {
 
     const CheckEmailHandler = async () => {
         setEmailNumberSending(true);
-        await OnEmailVerifySend(email).then((res) => {
-            setEmailNumberSending(false);
-            if (res.data == "You are already signed up") {
-                return;
-            }
-            setEmailNumberSent(true);
-        });
+        // await OnEmailVerifySend(email).then((res) => {
+        //     setEmailNumberSending(false);
+        //     if (res.data == "You are already signed up") {
+        //         return;
+        //     }
+        //     setEmailNumberSent(true);
+        //     setCheckCodeModalShow(true);
+        // });
+        setEmailNumberSending(false);
+        setEmailNumberSent(true);
+        setCheckCodeModalShow(true);
     };
     const CheckEmailMessageHandler = async () => {
         setEmailNumberChecked(await OnEmailVerify(email, checkNumber));
@@ -119,8 +126,13 @@ const RegisterForm = () => {
         }
     };
 
+    const HandleCheckModalClose = () => {
+        setCheckCodeModalShow(false);
+    };
+
     return (
         <FadeIn className="RegisterForm" childClassName="childClassName">
+            <EmailVerifyModal show={checkCodeModalShow} handleClose={HandleCheckModalClose} />
             <FloatingWrapper>
                 <FadeIn childClassName="childClassName">
                     <div className="center">

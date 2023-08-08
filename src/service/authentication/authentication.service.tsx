@@ -20,7 +20,7 @@ export const PostVerifyEmail = (email: string, code: string) => {
     };
     console.log(verifyData);
     const signUpResult: Promise<AxiosResponse> = axios
-        .post(`${API_URL}/api/users/emails/verify`, verifyData)
+        .post(`${API_URL}/api/users/permit-all/emails/verify`, verifyData)
         .then((res: AxiosResponse) => {
             return res;
         })
@@ -33,7 +33,7 @@ export const PostVerifyEmail = (email: string, code: string) => {
 export const PostSendVerifyEmail = (email: string) => {
     const emailString = email.replace("@", "%40");
     const sendResult: Promise<AxiosResponse> = axios
-        .post(`${API_URL}/api/users/emails/send?EmailTo=${emailString}`)
+        .post(`${API_URL}/api/users/permit-all/emails/send?EmailTo=${emailString}`)
         .then((res: AxiosResponse) => {
             return res;
         })
