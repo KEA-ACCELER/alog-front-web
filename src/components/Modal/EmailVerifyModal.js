@@ -3,9 +3,7 @@ import { Button, Modal, Form } from "react-bootstrap";
 import "./EmailVerifyModal.css";
 import { BsDot } from "react-icons/bs";
 
-export const EmailVerifyModal = ({ show, handleClose }) => {
-    const [code, setCode] = useState("");
-
+export const EmailVerifyModal = ({ show, handleClose, checkNumber, setCheckNumber, CheckEmailMessageHandler }) => {
     return (
         <Modal show={show} onHide={handleClose} className="EmailVerifyModal">
             <Modal.Header closeButton>
@@ -15,7 +13,7 @@ export const EmailVerifyModal = ({ show, handleClose }) => {
                 <Form>
                     <Form.Group className="">
                         <Form.Label className="inputLabel">이메일로 인증번호 전송이 완료되었습니다!</Form.Label>
-                        <Form.Control maxLength={6} type="text" placeholder="인증코드 입력" value={code} onChange={(e) => setCode(e.target.value)} />
+                        <Form.Control maxLength={6} type="text" placeholder="인증코드 입력" value={checkNumber} onChange={(e) => setCheckNumber(e.target.value)} />
                     </Form.Group>
                 </Form>
                 <div className="infoBox">
@@ -37,10 +35,20 @@ export const EmailVerifyModal = ({ show, handleClose }) => {
                 </div>
             </Modal.Body>
             <Modal.Footer>
-                <Button variant="secondary" onClick={() => {}}>
+                <Button
+                    variant="secondary"
+                    onClick={() => {
+                        handleClose();
+                    }}
+                >
                     취소
                 </Button>
-                <Button variant="primary" onClick={() => {}}>
+                <Button
+                    variant="primary"
+                    onClick={() => {
+                        CheckEmailMessageHandler();
+                    }}
+                >
                     인증확인
                 </Button>
             </Modal.Footer>

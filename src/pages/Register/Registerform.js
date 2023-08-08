@@ -101,20 +101,26 @@ const RegisterForm = () => {
 
     const CheckEmailHandler = async () => {
         setEmailNumberSending(true);
-        // await OnEmailVerifySend(email).then((res) => {
-        //     setEmailNumberSending(false);
-        //     if (res.data == "You are already signed up") {
-        //         return;
-        //     }
-        //     setEmailNumberSent(true);
-        //     setCheckCodeModalShow(true);
-        // });
-        setEmailNumberSending(false);
-        setEmailNumberSent(true);
-        setCheckCodeModalShow(true);
+        await OnEmailVerifySend(email).then((res) => {
+            setEmailNumberSending(false);
+            if (res.data == "You are already signed up") {
+                return;
+            }
+            setEmailNumberSent(true);
+            setCheckCodeModalShow(true);
+        });
+        // setEmailNumberSending(false);
+        // setEmailNumberSent(true);
+        // setCheckCodeModalShow(true);
     };
     const CheckEmailMessageHandler = async () => {
-        setEmailNumberChecked(await OnEmailVerify(email, checkNumber));
+        const res = await OnEmailVerify(email, checkNumber);
+        if (res === true) {
+            setEmailNumberChecked(res);
+            setCheckCodeModalShow(false);
+        } else {
+            alert("인증번호를 다시 확인해주세요");
+        }
     };
     const CheckNNHandler = async () => {
         if ((await OnDupNNCheck(nickName)) == true) {
@@ -132,7 +138,13 @@ const RegisterForm = () => {
 
     return (
         <FadeIn className="RegisterForm" childClassName="childClassName">
-            <EmailVerifyModal show={checkCodeModalShow} handleClose={HandleCheckModalClose} />
+            <EmailVerifyModal
+                show={checkCodeModalShow}
+                handleClose={HandleCheckModalClose}
+                checkNumber={checkNumber}
+                setCheckNumber={setCheckNumber}
+                CheckEmailMessageHandler={CheckEmailMessageHandler}
+            />
             <FloatingWrapper>
                 <FadeIn childClassName="childClassName">
                     <div className="center">
@@ -172,7 +184,7 @@ const RegisterForm = () => {
                             </Overlay>
                         </div>
 
-                        <div className="subform-container">
+                        {/* <div className="subform-container">
                             <div>Check Number</div>
                             <div className="checknum-container">
                                 <input
@@ -194,7 +206,7 @@ const RegisterForm = () => {
                                     Check
                                 </Button>
                             </div>
-                        </div>
+                        </div> */}
 
                         <div className="subform-container">
                             <div>Password</div>

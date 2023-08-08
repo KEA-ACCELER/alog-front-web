@@ -86,7 +86,7 @@ export const UsersInfo = () => {
 
 export const UsersCheckDuplicate = (userNN: string) => {
     const checkDupResult: Promise<AxiosResponse> = axios
-        .get(`${API_URL}/api/users/duplicated/${userNN}`)
+        .get(`${API_URL}/api/users/permit-all/duplicated/${userNN}`)
         .then((res: AxiosResponse) => {
             return res;
         })

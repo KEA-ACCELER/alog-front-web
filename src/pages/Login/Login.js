@@ -18,7 +18,7 @@ const Login = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
-    const LoginHandler = (email, password) => {
+    const LoginHandler = () => {
         OnLogin(email, password);
     };
 
