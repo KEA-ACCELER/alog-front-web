@@ -30,8 +30,8 @@ const AppRouter = (): JSX.Element => {
                     <Route path="/registerform" element={<RegisterForm />} />
                     <Route path="/teamInfo" element={<TeamInfo />} />
                     <Route path="/teamSetting" element={<TeamSetting />} />
-                    <Route path="/projectSetting" element={<ProjectSetting />} />
-                    <Route path="/projectAccess" element={<ProjectAccess />} />
+                    <Route path="/projectSetting/:projectPk/:projectName" element={<ProjectSetting />} />
+                    <Route path="/projectAccess/:projectPk/:projectName" element={<ProjectAccess />} />
                     <Route path="/profile" element={<Profile />} />
                     <Route element={<LeftTeamSection />}>
                         <Route path="/myProjects" element={<MyProjects />} />
