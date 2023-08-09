@@ -10,12 +10,13 @@ import Tooltip from "react-bootstrap/Tooltip";
 import { AuthenticationContext } from "../../service/authentication/authentication.context";
 import Spinner from "react-bootstrap/Spinner";
 import { EmailVerifyModal } from "../../components/Modal/EmailVerifyModal";
+import { AiOutlineCheckCircle } from "react-icons/ai";
 
 const RegisterForm = () => {
     const navigate = useNavigate();
     const location = useLocation();
 
-    const { OnDupNNCheck, OnRegister, OnEmailVerifySend, OnEmailVerify } = useContext(AuthenticationContext);
+    const { OnDupNNCheck, OnRegister, OnVerifiedRegister, OnEmailVerifySend, OnEmailVerify } = useContext(AuthenticationContext);
 
     const [checkCodeModalShow, setCheckCodeModalShow] = useState(false);
 
@@ -43,8 +44,6 @@ const RegisterForm = () => {
             setEmail(location.state.email);
             setIsGitHubReg(true);
             setIsEmailValid(true);
-            setIsPasswordValid(true);
-            setPassword("********");
             setCheckNumber("********");
         }
         console.log(location);
@@ -91,9 +90,12 @@ const RegisterForm = () => {
     const handleRegister = () => {
         if (setEmailNumberChecked && isPasswordValid && isNNValid) {
             if (isGitHubReg === true) {
+                console.log("깃허브를 통한 회원가입");
+                OnVerifiedRegister(email, password, nickName);
+                navigate("/", { replace: true });
             } else {
                 OnRegister(email, password, nickName);
-                navigate("/");
+                navigate("/", { replace: true });
             }
         } else if (!setEmailNumberChecked) {
             alert("이메일 인증을 해주세요.");
@@ -169,7 +171,7 @@ const RegisterForm = () => {
                                 <Button
                                     variant="dark"
                                     className="check-button"
-                                    disabled={!isEmailValid || emailNumberChecked || emailNumberSending}
+                                    disabled={isGitHubReg || !isEmailValid || emailNumberChecked || emailNumberSending}
                                     onClick={() => {
                                         CheckEmailHandler();
                                     }}
@@ -186,41 +188,19 @@ const RegisterForm = () => {
                             </Overlay>
                         </div>
 
-                        {/* <div className="subform-container">
-                            <div>Check Number</div>
-                            <div className="checknum-container">
-                                <input
-                                    className={isGitHubReg || !emailNumberSent || emailNumberChecked ? "isGitHubReg" : null}
-                                    disabled={isGitHubReg || !emailNumberSent || emailNumberChecked}
-                                    type="text"
-                                    placeholder="Check Code"
-                                    value={checkNumber}
-                                    onChange={(e) => setCheckNumber(e.target.value)}
-                                />
-                                <Button
-                                    disabled={!emailNumberSent || emailNumberChecked}
-                                    variant="dark"
-                                    className="check-button"
-                                    onClick={() => {
-                                        CheckEmailMessageHandler();
-                                    }}
-                                >
-                                    Check
-                                </Button>
-                            </div>
-                        </div> */}
-
                         <div className="subform-container">
                             <div>Password</div>
-                            <input
-                                className={isGitHubReg ? "isGitHubReg" : null}
-                                disabled={isGitHubReg}
-                                ref={passwordRef}
-                                type="password"
-                                placeholder="Enter your password..."
-                                value={password}
-                                onChange={(e) => setPassword(e.target.value)}
-                            />
+                            <div className="password-container">
+                                <input
+                                    // className={isGitHubReg ? "isGitHubReg" : null}
+                                    ref={passwordRef}
+                                    type="password"
+                                    placeholder="Enter your password..."
+                                    value={password}
+                                    onChange={(e) => setPassword(e.target.value)}
+                                />
+                                <AiOutlineCheckCircle className={`pwCheckIcon${isPasswordValid ? "true" : "false"}`} size={"28px"} />
+                            </div>
                             <Overlay target={passwordRef.current} show={showPasswordTip} placement="left">
                                 {(props) => (
                                     <Tooltip id="overlay-example" {...props}>
@@ -255,7 +235,7 @@ const RegisterForm = () => {
                         </div>
                     </div>
                 </FadeIn>
-                <Button variant="dark" className="register-button" onClick={handleRegister}>
+                <Button variant="dark" className="register-button" onClick={handleRegister} disabled={!(setEmailNumberChecked && isPasswordValid && isNNValid)}>
                     Register
                 </Button>
             </FloatingWrapper>

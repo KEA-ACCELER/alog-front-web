@@ -36,19 +36,42 @@ export const PostSendVerifyEmail = (email: string) => {
 
 // USER AUTH
 
-export const UsersSignup = (email: string, userPw: string, userNN: string) => {
+export const UsersSignup = async (email: string, userPw: string, userNN: string) => {
     const SignUpData = {
         userPw: userPw,
         userNN: userNN,
         email: email,
     };
-    const signUpResult: Promise<AxiosResponse> = axios
-        // .post(`${API_URL}/api/users/signup`, SignUpData)
+    console.log(SignUpData);
+    const signUpResult = await axios
         .post(`${API_URL}/api/users/permit-all/signup`, SignUpData)
         .then((res: AxiosResponse) => {
+            console.log(res);
             return res;
         })
         .catch((err: AxiosError) => {
+            console.log(err);
+            throw err;
+        });
+    return signUpResult;
+};
+
+//간편 로그인 후 리다이렉트 된 회원가입
+export const UsersVerifiedSignup = async (email: string, userPw: string, userNN: string) => {
+    const SignUpData = {
+        userPw: userPw,
+        userNN: userNN,
+        email: email,
+    };
+    console.log(SignUpData);
+    const signUpResult = await axios
+        .post(`${API_URL}/api/users/permit-all/signup/verified`, SignUpData)
+        .then((res: AxiosResponse) => {
+            console.log(res);
+            return res;
+        })
+        .catch((err: AxiosError) => {
+            console.log(err);
             throw err;
         });
     return signUpResult;

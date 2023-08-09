@@ -13,14 +13,10 @@ export const GithubLogin = () => {
 
     useEffect(() => {
         if (isLogin === true) {
-            navigate("/");
+            navigate("/", { replace: true });
         }
     }, [isLogin]);
-    useEffect(() => {
-        if (isLogin === true) {
-            navigate("/");
-        }
-    }, []);
+
     useEffect(() => {
         if (location.search) {
             fetchGithubAuth();
@@ -33,7 +29,7 @@ export const GithubLogin = () => {
         const loginres = await OnGHLogin(accessToken);
         console.log(loginres);
         if (loginres.type === "email") {
-            navigate("/registerform", { state: { email: loginres.result } });
+            navigate("/registerform", { state: { email: loginres.result }, replace: true });
         } else {
         }
     };

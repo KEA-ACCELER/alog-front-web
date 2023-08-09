@@ -55,6 +55,24 @@
     flex-direction: row;
 }
 
+.RegisterForm .password-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: 100%;
+}
+
+.RegisterForm .pwCheckIcontrue {
+    color: rgb(0, 186, 0);
+    margin-left: 14px;
+    transition-duration: 0.4s;
+}
+.RegisterForm .pwCheckIconfalse {
+    color: rgb(75, 75, 75);
+    margin-left: 14px;
+    transition-duration: 0.4s;
+}
+
 .RegisterForm .check-button {
     width: 70px;
     height: 40px;

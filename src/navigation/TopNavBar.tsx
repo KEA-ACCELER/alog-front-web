@@ -82,7 +82,7 @@ const LoggedOutNav = () => {
                 </Nav>
             </Navbar.Collapse>
             <Navbar.Collapse className="justify-content-end">
-                <TextButton onClick={() => navigate("/login")}>Sign In</TextButton>
+                <TextButton onClick={() => navigate("/signin")}>Sign In</TextButton>
                 <TextButton onClick={() => navigate("/registerform")}>Join</TextButton>
             </Navbar.Collapse>
         </>
