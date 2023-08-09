@@ -2,7 +2,6 @@ import React, { useContext, useEffect, useState } from "react";
 import Button from "react-bootstrap/Button";
 import "./Login.css";
 import logo from "../../assets/logo/alog-logo.png";
-
 import { useLocation, useNavigate } from "react-router-dom";
 import { FloatingWrapper } from "../../components/FloatingWrapper";
 import FadeIn from "../../animation/FadeIn";
