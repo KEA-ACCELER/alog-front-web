@@ -116,6 +116,7 @@ export const AuthenticationContextProvider = ({ children }) => {
         <AuthenticationContext.Provider
             value={{
                 userData,
+                userToken,
                 isLogin, // 로그인 되었다고 알려주는 변수
                 OnLogin, // 로그인 처리를 담당하는 함수
                 OnLogout, // 로그아웃 처리를 담당하는 함수
