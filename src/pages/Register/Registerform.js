@@ -42,6 +42,8 @@ const RegisterForm = () => {
         if (location.state) {
             setEmail(location.state.email);
             setIsGitHubReg(true);
+            setIsEmailValid(true);
+            setIsPasswordValid(true);
             setPassword("********");
             setCheckNumber("********");
         }
@@ -88,8 +90,11 @@ const RegisterForm = () => {
 
     const handleRegister = () => {
         if (setEmailNumberChecked && isPasswordValid && isNNValid) {
-            OnRegister(email, password, nickName);
-            navigate("/");
+            if (isGitHubReg === true) {
+            } else {
+                OnRegister(email, password, nickName);
+                navigate("/");
+            }
         } else if (!setEmailNumberChecked) {
             alert("이메일 인증을 해주세요.");
         } else if (!isNNValid) {
@@ -109,9 +114,6 @@ const RegisterForm = () => {
             setEmailNumberSent(true);
             setCheckCodeModalShow(true);
         });
-        // setEmailNumberSending(false);
-        // setEmailNumberSent(true);
-        // setCheckCodeModalShow(true);
     };
     const CheckEmailMessageHandler = async () => {
         const res = await OnEmailVerify(email, checkNumber);

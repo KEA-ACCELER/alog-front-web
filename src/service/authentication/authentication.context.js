@@ -1,12 +1,22 @@
 import React, { useState, createContext, useEffect } from "react";
-import { PostSendVerifyEmail, PostVerifyEmail, UsersCheckDuplicate, UsersLogin, UsersSignup, loginHandler } from "./authentication.service";
+import {
+    GetEmailWithGHToken,
+    PermitAllEmailLogin,
+    PostSendVerifyEmail,
+    PostVerifyEmail,
+    UsersCheckDuplicate,
+    UsersLogin,
+    UsersSignup,
+    loginHandler,
+    permitAllEmailLogin,
+} from "./authentication.service";
 
 export const AuthenticationContext = createContext();
 
 export const AuthenticationContextProvider = ({ children }) => {
     const [userToken, setUserToken] = useState(JSON.parse(sessionStorage.getItem("userToken")));
     const [isLogin, setIsLogin] = useState(JSON.parse(sessionStorage.getItem("isLogin")));
-    const [userData, setUserData] = useState(null);
+    const [userData, setUserData] = useState(JSON.parse(sessionStorage.getItem("userData")));
 
     const OnLogin = async (userEmail, userPw) => {
         const res = await UsersLogin(userEmail, userPw);
@@ -15,6 +25,8 @@ export const AuthenticationContextProvider = ({ children }) => {
             alert("이메일과 비밀번호를 다시 확인해주세요.");
         } else {
             setUserToken(res.data);
+            setUserData(JSON.parse(atob(res.data.split(".")[1])));
+            sessionStorage.setItem("userData", JSON.stringify(atob(res.data.split(".")[1])));
             sessionStorage.setItem("userToken", JSON.stringify(res.data));
             sessionStorage.setItem("isLogin", true);
             setIsLogin(true);
@@ -27,6 +39,8 @@ export const AuthenticationContextProvider = ({ children }) => {
         window.location.reload();
         setIsLogin(false);
         sessionStorage.removeItem("isLogin");
+        sessionStorage.removeItem("userData");
+        sessionStorage.removeItem("userToken");
         alert("로그아웃 되었습니다!");
     };
 
@@ -70,9 +84,38 @@ export const AuthenticationContextProvider = ({ children }) => {
             .catch((e) => alert(e));
         return res;
     };
+
+    const OnGHLogin = async (accessToken) => {
+        try {
+            const ghEmail = await GetEmailWithGHToken(accessToken);
+            console.log(ghEmail);
+            if (ghEmail === null) {
+                alert("이메일을 알 수 없는 깃허브 계정입니다");
+            }
+            const emailCheck = await PermitAllEmailLogin(ghEmail);
+            console.log(emailCheck);
+            const res = emailCheck.data.split(" ");
+            if (res[0] === "email") {
+                alert("회원가입창으로 이동합니다 닉네임을 설정해주세요!");
+                console.log("email");
+                return { type: "email", result: res[1] };
+            } else {
+                console.log("jwt : ", res[1]);
+                setUserToken(res[1]);
+                setUserData(JSON.parse(atob(res[1].split(".")[1])));
+                sessionStorage.setItem("userData", JSON.stringify(atob(res[1].split(".")[1])));
+                sessionStorage.setItem("userToken", JSON.stringify(res[1]));
+                sessionStorage.setItem("isLogin", true);
+                setIsLogin(true);
+                alert("로그인 되었습니다!");
+                return { type: "jwt", result: res[1] };
+            }
+        } catch {}
+    };
     return (
         <AuthenticationContext.Provider
             value={{
+                userData,
                 isLogin, // 로그인 되었다고 알려주는 변수
                 OnLogin, // 로그인 처리를 담당하는 함수
                 OnLogout, // 로그아웃 처리를 담당하는 함수
@@ -80,6 +123,7 @@ export const AuthenticationContextProvider = ({ children }) => {
                 OnDupNNCheck, // 회원가입시 닉네임 중복체크 담당 함수
                 OnEmailVerifySend, // 이메일 인증 번호를 보내는 함수
                 OnEmailVerify, // 이메일 인증 결과 요청 함수
+                OnGHLogin, // 엑세스 토큰으로 유저정보를 받아와 로그인 / 회원가입 처리를 해주는 함수
             }}
         >
             {children}
