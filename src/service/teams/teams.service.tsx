@@ -108,18 +108,18 @@ export const GetTeamMembers = (teamPk: number, userPk: number, userToken: string
   return getResult;
 };
 
-export const PostTeamMembers = (teamName: string, userNNList: string[], userPk: number, userToken: string): Promise<AxiosResponse> => {
+export const PostAddTeamMembers = (teamPk: number, userNNList: string[], userPk: number, userToken: string): Promise<AxiosResponse> => {
   const options = {
     headers: {
       Authorization: `Bearer ${userToken}`,
     },
   };
   const body = {
-    teamName: teamName,
+    teamPk: teamPk,
     userNNList: userNNList,
   };
   const postResult: Promise<AxiosResponse> = axios
-    .post(`${API_URL}/api/team-members?userPk=${userPk}`, body, options)
+    .post(`${API_URL}/api/users/team-members?userPk=${userPk}`, body, options)
     .then((res: AxiosResponse) => {
       return res;
     })

@@ -1,5 +1,5 @@
 import React, { useState, createContext, useEffect } from "react";
-import { DeleteTeams, GetTeamInfo, GetTeamList, GetTeamMembers, PostCreateTeams } from "./teams.service";
+import { DeleteTeams, GetTeamInfo, GetTeamList, GetTeamMembers, PostAddTeamMembers, PostCreateTeams } from "./teams.service";
 
 export const TeamsContext = createContext();
 
@@ -47,8 +47,15 @@ export const TeamsContextProvider = ({ children }) => {
 
     return res;
   };
-  const OnPostTeamMembers = async () => {
-    // const res = await PostCreateTeams(teamName, userNNList, userPk);
+  const OnAddTeamMembers = async (teamPk, userNNList, userPk, userToken) => {
+    const res = await PostAddTeamMembers(teamPk, userNNList, userPk, userToken)
+      .then((res) => {
+        console.log(res.data);
+        return res.data;
+      })
+      .catch((err) => console.log(err));
+
+    return res;
   };
   const OnDeleteTeamMembers = async () => {
     // const res = await PostCreateTeams(teamName, userNNList, userPk);
@@ -62,6 +69,7 @@ export const TeamsContextProvider = ({ children }) => {
         OnDeleteTeam,
         OnGetTeamInfo,
         OnGetTeamMembers,
+        OnAddTeamMembers,
       }}
     >
       {children}

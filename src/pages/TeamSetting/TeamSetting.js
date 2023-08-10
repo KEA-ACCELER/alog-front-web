@@ -10,7 +10,7 @@ import { AuthenticationContext } from "../../service/authentication/authenticati
 const TeamSetting = () => {
   const location = useLocation();
 
-  const { OnGetTeamInfo, OnGetTeamMembers } = useContext(TeamsContext);
+  const { OnGetTeamInfo, OnGetTeamMembers, OnAddTeamMembers } = useContext(TeamsContext);
   const { userData, userToken } = useContext(AuthenticationContext);
 
   const [teamInfo, setTeamInfo] = useState("");
@@ -28,10 +28,11 @@ const TeamSetting = () => {
     FetchTeamData();
   }, []);
 
-  const handleAddUser = () => {
+  const handleAddUser = async () => {
     const newMember = prompt("새로운 사용자를 추가하세요");
     if (newMember) {
-      setMembers([...members, newMember]);
+      await OnAddTeamMembers(teamPk, [newMember], userData.userPk, userToken);
+      FetchTeamData();
     }
   };
 
@@ -88,8 +89,8 @@ const TeamSetting = () => {
                 </button>
               </div>
               <div className="teamMembers-list">
-                <h5>leader : {members.teamLeaderNN}</h5>
-                {members &&
+                <h5>leader : {members && members.teamLeaderNN}</h5>
+                {members.teamMemberNNs &&
                   members.teamMemberNNs.map((member, index) => (
                     <p key={index} className="teamMember-name">
                       {member}
