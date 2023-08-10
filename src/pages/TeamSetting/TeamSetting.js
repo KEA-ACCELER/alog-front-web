@@ -9,21 +9,24 @@ import { AuthenticationContext } from "../../service/authentication/authenticati
 
 const TeamSetting = () => {
   const location = useLocation();
-  const { OnGetTeamInfo } = useContext(TeamsContext);
+
+  const { OnGetTeamInfo, OnGetTeamMembers } = useContext(TeamsContext);
   const { userData, userToken } = useContext(AuthenticationContext);
+
   const [teamInfo, setTeamInfo] = useState("");
   const [teamPk, setTeamPk] = useState(location.pathname.split("/")[1]);
-  const FetchTeamData = async () => {
-    setTeamInfo(await OnGetTeamInfo(teamPk, userData.userPk, userToken));
-  };
-  useEffect(() => {
-    // userData가 존재하는지 확인
-    console.log(teamPk, userData.userPk, userToken);
-    FetchTeamData();
-  }, [userData]);
-  const [members, setMembers] = useState(["Member1", "Member2", "Member3"]);
+  const [members, setMembers] = useState({});
+
   const [headerImage, setHeaderImage] = useState(null);
   const [showPopup, setShowPopup] = useState(false);
+
+  const FetchTeamData = async () => {
+    setTeamInfo(await OnGetTeamInfo(teamPk, userData.userPk, userToken));
+    setMembers(await OnGetTeamMembers(teamPk, userData.userPk, userToken));
+  };
+  useEffect(() => {
+    FetchTeamData();
+  }, []);
 
   const handleAddUser = () => {
     const newMember = prompt("새로운 사용자를 추가하세요");
@@ -85,11 +88,13 @@ const TeamSetting = () => {
                 </button>
               </div>
               <div className="teamMembers-list">
-                {members.map((member, index) => (
-                  <p key={index} className="teamMember-name">
-                    {member}
-                  </p>
-                ))}
+                <h5>leader : {members.teamLeaderNN}</h5>
+                {members &&
+                  members.teamMemberNNs.map((member, index) => (
+                    <p key={index} className="teamMember-name">
+                      {member}
+                    </p>
+                  ))}
               </div>
             </div>
           </FloatingWrapper>

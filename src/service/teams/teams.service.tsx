@@ -49,7 +49,6 @@ export const GetTeamInfo = (teamPk: number, userPk: number, userToken: string): 
 
   return res;
 };
-
 export const DeleteTeams = (teamPk: number, userPk: number, userToken: string): Promise<AxiosResponse> => {
   const options = {
     headers: {
@@ -90,9 +89,14 @@ export const GetTeamList = (userPk: number, userToken: string): Promise<AxiosRes
 
 // Team Members
 
-export const GetTeamMembers = (teamName: string, userPk: number): Promise<AxiosResponse> => {
+export const GetTeamMembers = (teamPk: number, userPk: number, userToken: string): Promise<AxiosResponse> => {
+  const options = {
+    headers: {
+      Authorization: `Bearer ${userToken}`,
+    },
+  };
   const getResult: Promise<AxiosResponse> = axios
-    .get(`${API_URL}/api/team-members?teamName=${teamName}&userPk=${userPk}`)
+    .get(`${API_URL}/api/users/team-members?teamPk=${teamPk}&userPk=${userPk}`, options)
     .then((res: AxiosResponse) => {
       return res;
     })
@@ -104,13 +108,18 @@ export const GetTeamMembers = (teamName: string, userPk: number): Promise<AxiosR
   return getResult;
 };
 
-export const PostTeamMembers = (teamName: string, userNNList: string[], userPk: number): Promise<AxiosResponse> => {
+export const PostTeamMembers = (teamName: string, userNNList: string[], userPk: number, userToken: string): Promise<AxiosResponse> => {
+  const options = {
+    headers: {
+      Authorization: `Bearer ${userToken}`,
+    },
+  };
   const body = {
     teamName: teamName,
     userNNList: userNNList,
   };
   const postResult: Promise<AxiosResponse> = axios
-    .post(`${API_URL}/api/team-members?userPk=${userPk}`, body)
+    .post(`${API_URL}/api/team-members?userPk=${userPk}`, body, options)
     .then((res: AxiosResponse) => {
       return res;
     })
@@ -122,7 +131,12 @@ export const PostTeamMembers = (teamName: string, userNNList: string[], userPk: 
   return postResult;
 };
 
-export const DeleteTeamMembers = (teamName: string, userNNList: string[], userPk: number): Promise<AxiosResponse> => {
+export const DeleteTeamMembers = (teamName: string, userNNList: string[], userPk: number, userToken: string): Promise<AxiosResponse> => {
+  const options = {
+    headers: {
+      Authorization: `Bearer ${userToken}`,
+    },
+  };
   const body = {
     teamName: teamName,
     userNNList: userNNList,
