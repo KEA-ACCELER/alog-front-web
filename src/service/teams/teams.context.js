@@ -1,5 +1,5 @@
 import React, { useState, createContext, useEffect } from "react";
-import { GetTeamList, PostCreateTeams } from "./teams.service";
+import { DeleteTeams, GetTeamInfo, GetTeamList, PostCreateTeams } from "./teams.service";
 
 export const TeamsContext = createContext();
 
@@ -9,8 +9,23 @@ export const TeamsContextProvider = ({ children }) => {
       .then((res) => console.log(res))
       .catch((err) => console.log(err));
   };
-  const OnDeleteTeam = async () => {
-    // const res = await PostCreateTeams(teamName, userNNList, userPk);
+  const OnGetTeamInfo = async (teamPk, userPk, userToken) => {
+    const res = await GetTeamInfo(teamPk, userPk, userToken)
+      .then((res) => {
+        console.log(res);
+        return res.data;
+      })
+      .catch((err) => console.log(err));
+    return res;
+  };
+  const OnDeleteTeam = async (teamPk, userPk) => {
+    const res = await DeleteTeams(teamPk, userPk)
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
   const OnGetTeamList = async (userPk, userToken) => {
     const res = await GetTeamList(userPk, userToken)
@@ -32,5 +47,16 @@ export const TeamsContextProvider = ({ children }) => {
     // const res = await PostCreateTeams(teamName, userNNList, userPk);
   };
 
-  return <TeamsContext.Provider value={{ OnCreateTeam, OnGetTeamList }}>{children}</TeamsContext.Provider>;
+  return (
+    <TeamsContext.Provider
+      value={{
+        OnCreateTeam,
+        OnGetTeamList,
+        OnDeleteTeam,
+        OnGetTeamInfo,
+      }}
+    >
+      {children}
+    </TeamsContext.Provider>
+  );
 };

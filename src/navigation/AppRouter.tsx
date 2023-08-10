@@ -20,33 +20,33 @@ import { Profile } from "../pages/Profile/Profile";
 import { GithubLogin } from "../pages/Login/GithubLogin";
 
 const AppRouter = (): JSX.Element => {
-    return (
-        <BrowserRouter>
-            <Routes>
-                <Route element={<TopNavBar />}>
-                    <Route path="/" element={<Home />} />
-                    <Route path="/signin" element={<Login />} />
-                    <Route path="/ghLogin" element={<GithubLogin />} />
-                    <Route path="/registerform" element={<RegisterForm />} />
-                    <Route path="/teamInfo" element={<TeamInfo />} />
-                    <Route path="/teamSetting" element={<TeamSetting />} />
-                    <Route path="/:projectPk/projectSetting" element={<ProjectSetting />} />
-                    <Route path="/:projectPk/projectAccess" element={<ProjectAccess />} />
-                    <Route path="/profile" element={<Profile />} />
-                    <Route element={<LeftTeamSection />}>
-                        <Route path="/myProjects" element={<MyProjects />} />
-                        <Route path="/myIssues" element={<MyIssues />} />
-                        <Route path="/CreateProject" element={<CreateProject />} />
-                    </Route>
-                    <Route element={<LeftNavSection />}>
-                        <Route path="/:projectPk/Board/" element={<Board />} />
-                        <Route path="/:projectPk/Timeline" element={<Timeline />} />
-                        <Route path="/:projectPk/ReleaseNote" element={<ReleaseNote />} />
-                        <Route path="/:projectPk/CreateReleaseNote" element={<CreateReleaseNote />} />
-                    </Route>
-                </Route>
-            </Routes>
-        </BrowserRouter>
-    );
+  return (
+    <BrowserRouter>
+      <Routes>
+        <Route element={<TopNavBar />}>
+          <Route path="/" element={<Home />} />
+          <Route path="/signin" element={<Login />} />
+          <Route path="/ghLogin" element={<GithubLogin />} />
+          <Route path="/registerform" element={<RegisterForm />} />
+          <Route path="/teamInfo" element={<TeamInfo />} />
+          <Route path="/:teamPk/teamSetting" element={<TeamSetting />} />
+          <Route path="/:projectPk/projectSetting" element={<ProjectSetting />} />
+          <Route path="/:projectPk/projectAccess" element={<ProjectAccess />} />
+          <Route path="/profile" element={<Profile />} />
+          <Route element={<LeftTeamSection />}>
+            <Route path="/myProjects" element={<MyProjects />} />
+            <Route path="/myIssues" element={<MyIssues />} />
+            <Route path="/CreateProject" element={<CreateProject />} />
+          </Route>
+          <Route element={<LeftNavSection />}>
+            <Route path="/:projectPk/Board/" element={<Board />} />
+            <Route path="/:projectPk/Timeline" element={<Timeline />} />
+            <Route path="/:projectPk/ReleaseNote" element={<ReleaseNote />} />
+            <Route path="/:projectPk/CreateReleaseNote" element={<CreateReleaseNote />} />
+          </Route>
+        </Route>
+      </Routes>
+    </BrowserRouter>
+  );
 };
 export default AppRouter;

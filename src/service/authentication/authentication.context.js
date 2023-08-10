@@ -17,8 +17,11 @@ export const AuthenticationContext = createContext();
 export const AuthenticationContextProvider = ({ children }) => {
   const [userToken, setUserToken] = useState(JSON.parse(sessionStorage.getItem("userToken")));
   const [isLogin, setIsLogin] = useState(JSON.parse(sessionStorage.getItem("isLogin")));
-  const [userData, setUserData] = useState(JSON.parse(sessionStorage.getItem("userData")));
+  const [userData, setUserData] = useState(JSON.parse(JSON.parse(sessionStorage.getItem("userData"))));
 
+  useEffect(() => {
+    console.log("userData : ", userData);
+  }, []);
   const OnLogin = async (userEmail, userPw) => {
     const res = await UsersLogin(userEmail, userPw);
     console.log(res);
@@ -116,6 +119,7 @@ export const AuthenticationContextProvider = ({ children }) => {
         console.log(res);
         setUserToken(res[1]);
         setUserData(JSON.parse(atob(res[1].split(".")[1])));
+
         sessionStorage.setItem("userData", JSON.stringify(atob(res[1].split(".")[1])));
         sessionStorage.setItem("userToken", JSON.stringify(res[1]));
         sessionStorage.setItem("isLogin", true);

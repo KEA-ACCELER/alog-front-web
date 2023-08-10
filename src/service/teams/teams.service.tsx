@@ -29,9 +29,35 @@ export const PostCreateTeams = (teamName: string, userNNList: string[], userPk: 
 
   return createTeamRes;
 };
-export const DeleteTeams = (teamName: string, userPk: number): Promise<AxiosResponse> => {
+export const GetTeamInfo = (teamPk: number, userPk: number, userToken: string): Promise<AxiosResponse> => {
+  const options = {
+    headers: {
+      Authorization: `Bearer ${userToken}`,
+    },
+  };
+
+  const res: Promise<AxiosResponse> = axios
+    .get(`${API_URL}/api/users/teams?teamPk=${teamPk}&userPk=${userPk}`, options)
+    .then((res: AxiosResponse) => {
+      console.log(res);
+      return res;
+    })
+    .catch((err: AxiosError) => {
+      alert(err.response?.data || err.message);
+      throw err;
+    });
+
+  return res;
+};
+
+export const DeleteTeams = (teamPk: number, userPk: number, userToken: string): Promise<AxiosResponse> => {
+  const options = {
+    headers: {
+      Authorization: `Bearer ${userToken}`,
+    },
+  };
   const deleteTeamRes: Promise<AxiosResponse> = axios
-    .delete(`${API_URL}/api/teams?teamName=${teamName}&userPk=${userPk}`)
+    .delete(`${API_URL}/api/users/teams?teamPk=${teamPk}&userPk=${userPk}`, options)
     .then((res: AxiosResponse) => {
       return res;
     })

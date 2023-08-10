@@ -1,10 +1,26 @@
-import React, { useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import "./TeamSetting.css";
 import { FloatingWrapper } from "../../components/FloatingWrapper";
 import { Button } from "react-bootstrap";
 import check from "../../assets/images/check.png";
+import { useLocation } from "react-router-dom";
+import { TeamsContext } from "../../service/teams/teams.context";
+import { AuthenticationContext } from "../../service/authentication/authentication.context";
 
 const TeamSetting = () => {
+  const location = useLocation();
+  const { OnGetTeamInfo } = useContext(TeamsContext);
+  const { userData, userToken } = useContext(AuthenticationContext);
+  const [teamInfo, setTeamInfo] = useState("");
+  const [teamPk, setTeamPk] = useState(location.pathname.split("/")[1]);
+  const FetchTeamData = async () => {
+    setTeamInfo(await OnGetTeamInfo(teamPk, userData.userPk, userToken));
+  };
+  useEffect(() => {
+    // userData가 존재하는지 확인
+    console.log(teamPk, userData.userPk, userToken);
+    FetchTeamData();
+  }, [userData]);
   const [members, setMembers] = useState(["Member1", "Member2", "Member3"]);
   const [headerImage, setHeaderImage] = useState(null);
   const [showPopup, setShowPopup] = useState(false);
@@ -55,6 +71,7 @@ const TeamSetting = () => {
       </div>
 
       <div className="teamSetting-Body">
+        <h1>{teamInfo.teamName}</h1>
         <div className="teamMember">
           <FloatingWrapper className="teamMember-container">
             <div className="teamMember-head">구성원</div>

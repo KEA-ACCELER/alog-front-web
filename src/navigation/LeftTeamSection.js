@@ -6,7 +6,7 @@ import CreateTeamModal from "../components/Modal/CreateTeamModal";
 import FadeIn from "../animation/FadeIn";
 import { TeamsContext } from "../service/teams/teams.context";
 import { AuthenticationContext } from "../service/authentication/authentication.context";
-
+import { AiOutlineSetting } from "react-icons/ai";
 const LeftTeamSection = () => {
   const navigate = useNavigate();
   const [teams, setTeams] = useState([]);
@@ -37,9 +37,14 @@ const LeftTeamSection = () => {
         <div className="teams">
           <h4 className="teams-title">Teams</h4>
           {teams.map((it) => (
-            <Button variant="outline-success" key={it.teamPk} onClick={() => navigate(`/${it.teamName}`)}>
-              {it.teamName}
-            </Button>
+            <div className="teamWrapper">
+              <Button variant="outline-success" key={it.teamPk} onClick={() => navigate(`/${it.teamName}`)}>
+                {it.teamName}
+              </Button>
+              <div className="teamSettingBtn" onClick={() => navigate(`${it.teamPk}/teamSetting`)}>
+                <AiOutlineSetting size={"20px"} color="gray" />
+              </div>
+            </div>
           ))}
           <Button variant="outline-success" onClick={() => setShowModal(true)}>
             +
