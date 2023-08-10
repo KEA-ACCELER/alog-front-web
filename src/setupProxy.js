@@ -15,4 +15,10 @@ module.exports = function (app) {
             changeOrigin: true,
         })
     );
+    app.use(
+        createProxyMiddleware("/api", {
+            target: "https://alog.acceler.kr",
+            changeOrigin: true,
+        })
+    );
 };

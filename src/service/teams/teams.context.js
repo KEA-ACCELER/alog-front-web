@@ -4,9 +4,10 @@ import { PostCreateTeams } from "./teams.service";
 export const TeamsContext = createContext();
 
 export const TeamsContextProvider = ({ children }) => {
-    const OnCreateTeam = async (teamName, userNNList, userPk) => {
-        const res = await PostCreateTeams(teamName, userNNList, userPk);
-        console.log(res);
+    const OnCreateTeam = async (teamName, userNNList, userPk, userToken) => {
+        const res = await PostCreateTeams(teamName, userNNList, userPk, userToken)
+            .then((res) => console.log(res))
+            .catch((err) => console.log(err));
     };
     const OnDeleteTeam = async () => {
         // const res = await PostCreateTeams(teamName, userNNList, userPk);
