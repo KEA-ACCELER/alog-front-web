@@ -131,18 +131,20 @@ export const PostAddTeamMembers = (teamPk: number, userNNList: string[], userPk:
   return postResult;
 };
 
-export const DeleteTeamMembers = (teamName: string, userNNList: string[], userPk: number, userToken: string): Promise<AxiosResponse> => {
-  const options = {
+export const DeleteTeamMembers = (teamPk: number, userNNList: string[], userPk: number, userToken: string): Promise<AxiosResponse> => {
+  const body = {
+    teamPk: teamPk,
+    userNNList: userNNList,
+  };
+  const config = {
     headers: {
       Authorization: `Bearer ${userToken}`,
     },
+    data: body,
   };
-  const body = {
-    teamName: teamName,
-    userNNList: userNNList,
-  };
+
   const deleteResult: Promise<AxiosResponse> = axios
-    .delete(`${API_URL}/api/team-members?userPk=${userPk}`, { data: body })
+    .delete(`${API_URL}/api/users/team-members?userPk=${userPk}`, config)
     .then((res: AxiosResponse) => {
       return res;
     })

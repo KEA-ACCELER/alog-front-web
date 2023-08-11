@@ -11,7 +11,7 @@ const TeamSetting = () => {
   const location = useLocation();
   const navigate = useNavigate();
 
-  const { OnGetTeamInfo, OnGetTeamMembers, OnAddTeamMembers, OnDeleteTeam } = useContext(TeamsContext);
+  const { OnGetTeamInfo, OnGetTeamMembers, OnAddTeamMembers, OnDeleteTeam, OnDeleteTeamMembers } = useContext(TeamsContext);
   const { userData, userToken } = useContext(AuthenticationContext);
 
   const [teamInfo, setTeamInfo] = useState("");
@@ -56,9 +56,10 @@ const TeamSetting = () => {
     setDeleteMember(event.target.value);
   };
 
-  const handleDelete = () => {
-    const updatedMembers = members.filter((member) => member !== deleteMember);
-    setMembers(updatedMembers); // 멤버 목록을 업데이트
+  const handleDelete = async () => {
+    console.log(teamPk, [deleteMember], userData.userPk, userToken);
+    await OnDeleteTeamMembers(teamPk, [deleteMember], userData.userPk, userToken);
+    FetchTeamData();
     setDeleteMember(""); // 삭제할 멤버 상태 초기화
     setShowPopup(false);
   };
