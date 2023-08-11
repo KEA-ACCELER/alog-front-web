@@ -7,6 +7,7 @@ import { Button } from "react-bootstrap";
 import { Dispatch, SetStateAction, useRef, useState } from "react";
 import { TextButton } from "./Buttons";
 import FadeIn from "../animation/FadeIn";
+import yorkie, { Text as YorkieText } from 'yorkie-js-sdk';
 
 const RNColumnContent: RNColumnContentData[] = [{ key: 0, content: "" }];
 
@@ -15,65 +16,60 @@ export const RNColumn = ({
     tag,
     content,
     data,
-    setData,
+    // setData,
+    updateData,
 }: {
     columnId: number;
     tag: RNTag;
     content: RNColumnContentData[];
     data: ReleaseNoteData;
-    setData: Dispatch<SetStateAction<ReleaseNoteData>>;
+    // setData: Dispatch<SetStateAction<ReleaseNoteData>>;
+    updateData: (data: ReleaseNoteData) => void;
 }) => {
     const contentId = useRef(1);
 
     const deleteItem = (id: number) => {
-        setData((prevData) => {
-            const newContent = prevData.content.map((column) => {
-                if (column.key === columnId) {
-                    const newColumnContentData = column.content.filter((item) => item.key !== id);
-                    return { ...column, content: newColumnContentData };
-                }
-                return column;
-            });
-            return { ...prevData, content: newContent };
+        const newContent = data.content.map((column) => {
+            if (column.key === columnId) {
+                const newColumnContentData = column.content.filter((item) => item.key !== id);
+                return { ...column, content: newColumnContentData };
+            }
+            return column;
         });
+        updateData({ ...data, content: newContent });
     };
     const addItem = () => {
-        setData((prevData) => {
-            const newColumnContentData: RNColumnContentData = { key: contentId.current, content: "" };
-            const columnContentData: RNColumnContentData[] = [...prevData.content[columnId].content, newColumnContentData];
-            const newColumnData: ReleaseNoteColumnData = prevData.content[columnId];
-            newColumnData.content = columnContentData;
+        const newColumnContentData: RNColumnContentData = { key: contentId.current, content: "" };
+        const columnContentData: RNColumnContentData[] = [...data.content[columnId].content, newColumnContentData];
+        const newColumnData: ReleaseNoteColumnData = data.content[columnId];
+        newColumnData.content = columnContentData;
 
-            const newContentData = prevData.content.map((column) => {
-                if (column.key === columnId) {
-                    return newColumnData;
-                }
-                return column;
-            });
-
-            const newData: ReleaseNoteData = { ...prevData, content: newContentData };
-            contentId.current += 1;
-            return newData;
+        const newContentData = data.content.map((column) => {
+            if (column.key === columnId) {
+                return newColumnData;
+            }
+            return column;
         });
+
+        contentId.current += 1;
+        updateData({ ...data, content: newContentData});
     };
 
     const handleInputChange = (itemId: number, inputValue: string) => {
-        setData((prevData) => {
-            const newContentData = prevData.content.map((column) => {
-                if (column.key === columnId) {
-                    const newColumnContentData = column.content.map((item) => {
-                        if (item.key === itemId) {
-                            return { ...item, content: inputValue };
-                        }
-                        return item;
-                    });
-                    return { ...column, content: newColumnContentData };
-                }
-                return column;
-            });
-
-            return { ...prevData, content: newContentData };
+        const newContentData = data.content.map((column) => {
+            if (column.key === columnId) {
+                const newColumnContentData = column.content.map((item) => {
+                    if (item.key === itemId) {
+                        return { ...item, content: inputValue };
+                    }
+                    return item;
+                });
+                return { ...column, content: newColumnContentData };
+            }
+            return column;
         });
+
+        updateData({ ...data, content: newContentData });
     };
     return (
         <FloatingWrapper className="RNColumn" borderRadius="20px">
