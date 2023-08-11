@@ -18,14 +18,22 @@ export const TeamsContextProvider = ({ children }) => {
       .catch((err) => console.log(err));
     return res;
   };
-  const OnDeleteTeam = async (teamPk, userPk) => {
-    const res = await DeleteTeams(teamPk, userPk)
+  const OnDeleteTeam = async (teamPk, userPk, userToken) => {
+    const res = await DeleteTeams(teamPk, userPk, userToken)
       .then((res) => {
         console.log(res);
+        if (res.data === "team deleted successfully") {
+          alert("team deleted successfully");
+          return true;
+        } else if (res.data === "you are not team leader") {
+          alert("you are not team leader");
+          return false;
+        }
       })
       .catch((err) => {
         console.log(err);
       });
+    return res;
   };
   const OnGetTeamList = async (userPk, userToken) => {
     const res = await GetTeamList(userPk, userToken)

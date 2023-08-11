@@ -8,7 +8,7 @@ const CreateTeamModal = ({ fetchTeamList, show, handleClose }) => {
   const [teamName, setTeamName] = useState("");
   const [inviteUser, setInviteUser] = useState("");
 
-  const { userToken } = useContext(AuthenticationContext);
+  const { userToken, userData } = useContext(AuthenticationContext);
   const { OnCreateTeam } = useContext(TeamsContext);
 
   const handleCreateTeam = async (event) => {
@@ -21,7 +21,7 @@ const CreateTeamModal = ({ fetchTeamList, show, handleClose }) => {
 
     setTeamName("");
     // await OnCreateTeam(teamName, userNNList, userPk);
-    await OnCreateTeam(teamName, ["jimin2"], 1, userToken);
+    await OnCreateTeam(teamName, [inviteUser], userData.userPk, userToken);
     await fetchTeamList();
     handleClose();
   };

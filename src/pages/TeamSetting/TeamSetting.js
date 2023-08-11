@@ -3,14 +3,15 @@ import "./TeamSetting.css";
 import { FloatingWrapper } from "../../components/FloatingWrapper";
 import { Button } from "react-bootstrap";
 import check from "../../assets/images/check.png";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { TeamsContext } from "../../service/teams/teams.context";
 import { AuthenticationContext } from "../../service/authentication/authentication.context";
 
 const TeamSetting = () => {
   const location = useLocation();
+  const navigate = useNavigate();
 
-  const { OnGetTeamInfo, OnGetTeamMembers, OnAddTeamMembers } = useContext(TeamsContext);
+  const { OnGetTeamInfo, OnGetTeamMembers, OnAddTeamMembers, OnDeleteTeam } = useContext(TeamsContext);
   const { userData, userToken } = useContext(AuthenticationContext);
 
   const [teamInfo, setTeamInfo] = useState("");
@@ -62,20 +63,33 @@ const TeamSetting = () => {
     setShowPopup(false);
   };
 
+  const DeleteTeamHandler = async () => {
+    console.log(teamPk, userData.userPk, userToken);
+    const res = await OnDeleteTeam(teamPk, userData.userPk, userToken);
+    if (res === true) {
+      navigate(-1, { replace: true });
+    }
+  };
+
   return (
     <div className="TeamSetting">
+      <h3 style={{ marginLeft: "10%" }}>{teamInfo.teamName}</h3>
       <div className="teamSetting-Header">
         <div className="header-image-container" style={{ backgroundImage: `url(${headerImage})` }}>
           {!headerImage && <span className="header-image-text">헤더 이미지</span>}
         </div>
         <input type="file" accept="image/*" onChange={handleImageUpload} id="header-image-upload" style={{ display: "none" }} />
-        <label htmlFor="header-image-upload" className="add-header-btn">
-          헤더 이미지 추가
-        </label>
+        <div style={{ display: "flex", width: "100%", justifyContent: "space-around", alignItems: "center" }}>
+          <label htmlFor="header-image-upload" className="add-header-btn">
+            헤더 이미지 추가
+          </label>
+          <Button style={{}} variant="outline-danger" onClick={() => DeleteTeamHandler()}>
+            팀 삭제
+          </Button>
+        </div>
       </div>
 
       <div className="teamSetting-Body">
-        <h1>{teamInfo.teamName}</h1>
         <div className="teamMember">
           <FloatingWrapper className="teamMember-container">
             <div className="teamMember-head">구성원</div>
