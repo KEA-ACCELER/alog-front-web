@@ -16,3 +16,18 @@ export const GetNotifications = (userToken) => {
   });
   return data;
 }
+
+export const CheckNotification = (userToken, notiId) => {
+  const data = axios.put(API_URL + "/api/noti?id=" + notiId, null, {
+    headers: {
+      Authorization: `Bearer ${userToken}`,
+    }
+  }).then((res) => {
+    console.log(res);
+    return res
+  }).catch((err) => {
+    console.log(err);
+    return null
+  });
+  return data;
+}

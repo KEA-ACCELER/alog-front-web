@@ -48,6 +48,17 @@
   height: auto;
 }
 
+.checkImg:hover {
+  cursor: pointer;
+  scale: 1.1;
+}
+
+.Notification .issue-container .issue-img-content .checkedImg {
+  margin-right: 1rem;
+  width: 1.4rem;
+  height: auto;
+}
+
 .Notification .issue-container .issue-status {
   margin-left: 2rem;
 }

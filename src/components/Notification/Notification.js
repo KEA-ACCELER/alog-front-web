@@ -4,8 +4,9 @@ import "./Notification.css";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useEffect, useState, useContext } from "react";
 import Check from "../../assets/images/check.png";
+import Uncheck from "../../assets/images/uncheck.png";
 import { AuthenticationContext } from "../../service/authentication/authentication.context";
-import { GetNotifications } from "../../service/notification/notification.service";
+import { GetNotifications, CheckNotification } from "../../service/notification/notification.service";
 
 function Notification({ show, handleClose }) {
   const location = useLocation();
@@ -63,7 +64,20 @@ function Notification({ show, handleClose }) {
                   <div className="issue-msg">{noti.MsgContent} </div> 
                 </div>
                 <div className="issue-img-content">
-                  <img src={Check} alt="Checkmark" className="checkImg" />
+                  {noti.IsChecked ? 
+                  <img src={Check} alt="Checkmark" className="checkedImg" />
+                  : <img src={Uncheck} alt="Checkmark" className="checkImg" onClick={() => {
+                    CheckNotification(userToken, noti.Id).then((res) => {
+                      if (res.data === 'ok') {
+                        GetNotifications(userToken).then((newNoti) => {
+                          if (newNoti != null) {
+                            setNotifications(newNoti);
+                          }
+                        });
+                      }
+                    });
+                  }} />
+                  }
                   <div className="issue-time">{getMinutesAgo(noti.Datetime) + 'min ago'}</div>
                   {/* <div className="issue-content">{'읽음 표시'}</div> */}
                 </div>
